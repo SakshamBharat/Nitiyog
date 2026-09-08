@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Add Scheme - NitiYog Admin</title>
+
+  <link
+    rel="stylesheet"
+    href="/css/nitiyog.css"
+  >
+
+  <style>
+    body {
+      background: #f4f6f9;
+      padding: 40px;
+      font-family: sans-serif;
+    }
+
+    .form-box {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .checkbox-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .checkbox-list label {
+      font-weight: normal;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #1a56db;
+      text-decoration: none;
+    }
+
+    @media(max-width: 700px) {
+      .grid-2,
+      .checkbox-list {
+        grid-template-columns: 1fr;
+      }
+
+      body {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="form-box">
+
+    <a
+      href="/admin/dashboard"
+      class="back"
+    >
+      ← Back to Dashboard
+    </a>
+
+    <h2>
+      Add New Government Scheme
+    </h2>
+
+    <form
+      action="/admin/add-scheme"
+      method="POST"
+    >
+
+      <!-- BASIC INFORMATION -->
+
+      <div class="form-group">
+
+        <label>
+          Scheme Title
+        </label>
+
+        <input
+          type="text"
+          name="title"
+          required
+          placeholder="e.g. PMEGP Loan Scheme"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Ministry
+        </label>
+
+        <input
+          type="text"
+          name="ministry"
+          required
+          placeholder="e.g. Ministry of MSME"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Description
+        </label>
+
+        <textarea
+          name="description"
+          rows="4"
+          required
+          placeholder="Describe the scheme..."
+        ></textarea>
+
+      </div>
+
+
+      <!-- AGE -->
+
+      <h3>
+        Age Eligibility
+      </h3>
+
+      <div class="grid-2">
+
+        <div class="form-group">
+
+          <label>
+            Minimum Age
+          </label>
+
+          <input
+            type="number"
+            name="minAge"
+            min="0"
+            placeholder="18"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Maximum Age
+          </label>
+
+          <input
+            type="number"
+            name="maxAge"
+            min="0"
+            placeholder="60"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- FINANCIAL -->
+
+      <h3>
+        Financial Eligibility
+      </h3>
+
+      <div class="grid-2">
+
+        <div class="form-group">
+
+          <label>
+            Maximum Annual Income (₹)
+          </label>
+
+          <input
+            type="number"
+            name="maxIncome"
+            min="0"
+            step="1000"
+            placeholder="500000"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Maximum Turnover (₹)
+          </label>
+
+          <input
+            type="number"
+            name="maxTurnover"
+            min="0"
+            step="1000"
+            placeholder="10000000"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Maximum Funding / Benefit (₹)
+        </label>
+
+        <input
+          type="number"
+          name="maxFunding"
+          min="0"
+          step="1000"
+          placeholder="2500000"
+        >
+
+      </div>
+
+
+      <!-- CATEGORY -->
+
+      <h3>
+        Target Category
+      </h3>
+
+      <div class="checkbox-list">
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetCategory"
+            value="ALL"
+          >
+          All Categories
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetCategory"
+            value="GENERAL"
+          >
+          General
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetCategory"
+            value="OBC"
+          >
+          OBC
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetCategory"
+            value="SC"
+          >
+          SC
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetCategory"
+            value="ST"
+          >
+          ST
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetCategory"
+            value="MINORITY"
+          >
+          Minority
+        </label>
+
+      </div>
+
+
+      <!-- GENDER -->
+
+      <h3>
+        Target Gender
+      </h3>
+
+      <div class="form-group">
+
+        <select
+          name="targetGender"
+        >
+
+          <option value="ALL">
+            All
+          </option>
+
+          <option value="Male">
+            Male
+          </option>
+
+          <option value="Female">
+            Female
+          </option>
+
+          <option value="Other">
+            Other
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- STATE -->
+
+      <h3>
+        Target State
+      </h3>
+
+      <div class="checkbox-list">
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetState"
+            value="ALL"
+          >
+          All States
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetState"
+            value="Uttar Pradesh"
+          >
+          Uttar Pradesh
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetState"
+            value="Maharashtra"
+          >
+          Maharashtra
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetState"
+            value="Bihar"
+          >
+          Bihar
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetState"
+            value="West Bengal"
+          >
+          West Bengal
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetState"
+            value="Rajasthan"
+          >
+          Rajasthan
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetState"
+            value="Madhya Pradesh"
+          >
+          Madhya Pradesh
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetState"
+            value="Tamil Nadu"
+          >
+          Tamil Nadu
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetState"
+            value="Gujarat"
+          >
+          Gujarat
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetState"
+            value="Delhi"
+          >
+          Delhi
+        </label>
+
+      </div>
+
+
+      <!-- ENTERPRISE -->
+
+      <h3>
+        Enterprise Type
+      </h3>
+
+      <div class="checkbox-list">
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetEnterpriseType"
+            value="ALL"
+          >
+          All Types
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetEnterpriseType"
+            value="Micro"
+          >
+          Micro
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetEnterpriseType"
+            value="Small"
+          >
+          Small
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetEnterpriseType"
+            value="Medium"
+          >
+          Medium
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="targetEnterpriseType"
+            value="New Startup"
+          >
+          New Startup
+        </label>
+
+      </div>
+
+
+      <br>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        style="width:100%;"
+      >
+        Save & Publish Scheme
+      </button>
+
+    </form>
+
+  </div>
+
+</body>
+</html>

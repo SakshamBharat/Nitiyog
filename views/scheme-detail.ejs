@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= scheme.title %> - NitiYog</title>
+  <link rel="stylesheet" href="/css/nitiyog.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="brand-logo">
+      <div class="brand-logo-mark">N</div>
+      <div class="brand-logo-text">Niti<span>yog</span></div>
+    </div>
+    <div>
+      <a href="/dashboard" style="color:#ffffff; text-decoration:none;">← Back to Dashboard</a>
+    </div>
+  </header>
+
+  <div class="app-container">
+    
+    <div class="card">
+      <div class="form-eyebrow"><%= scheme.ministry %></div>
+      <h2><%= scheme.title %></h2>
+      <p class="section-desc" style="margin-top: 8px;"><%= scheme.description %></p>
+
+      <div class="section-header-tag">Scheme Funding & Limits</div>
+      <div class="grid-3">
+        <div><strong>Max Funding:</strong> ₹<%= scheme.maxFunding.toLocaleString() %></div>
+        <div><strong>Min Age Required:</strong> <%= scheme.minAge %> yrs</div>
+        <div><strong>Max Age Required:</strong> <%= scheme.maxAge %> yrs</div>
+      </div>
+
+      <div class="section-header-tag">Target Eligibility Criteria</div>
+      <div class="grid-2">
+        <div><strong>Eligible Categories:</strong> <%= scheme.targetCategory.join(', ') %></div>
+        <div><strong>Eligible States:</strong> <%= scheme.targetState.join(', ') %></div>
+        <div><strong>Allowed Enterprise Types:</strong> <%= scheme.targetEnterpriseType.join(', ') %></div>
+        <div><strong>Max Allowed Income:</strong> ₹<%= scheme.maxIncome.toLocaleString() %></div>
+      </div>
+    </div>
+
+    <!-- Pre-filled Data Review -->
+    <div class="card">
+      <h2>Apply using your Profile Data</h2>
+      <p class="section-desc">The system will bundle your account details into the application document.</p>
+
+      <form id="applyForm">
+        <input type="hidden" id="schemeId" value="<%= scheme.id %>">
+
+        <div class="grid-2" style="margin-top: 12px;">
+          <div class="form-group">
+            <label class="form-label">Applicant Name</label>
+            <input type="text" class="form-control" value="<%= user.name %>" disabled>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control" value="<%= user.email %>" disabled>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <input type="text" class="form-control" value="<%= user.Profile.category %>" disabled>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Enterprise Type</label>
+            <input type="text" class="form-control" value="<%= user.Profile.enterpriseType %>" disabled>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Annual Turnover</label>
+            <input type="text" class="form-control" value="₹<%= user.Profile.turnover %>" disabled>
+          </div>
+        </div>
+
+        <div class="checkbox-group mb-3">
+          <label class="checkbox-item">
+            <input type="checkbox" required>
+            I confirm that my profile criteria match the official program terms.
+          </label>
+        </div>
+
+        <button type="submit" id="submitAppBtn" class="btn btn-success">
+          Generate Application PDF & Submit
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+<script>
+document.getElementById('applyForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submitAppBtn');
+  btn.innerText = "Processing Submission...";
+  btn.disabled = true;
+
+  const schemeId = document.getElementById('schemeId').value;
+
+  try {
+    const res = await fetch('/api/applications/apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ schemeId })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert('Application submitted successfully!');
+      window.location.href = '/dashboard';
+    } else {
+      alert(data.error || 'Application failed');
+      btn.innerText = "Generate Application PDF & Submit";
+      btn.disabled = false;
+    }
+  } catch (err) {
+    alert('Server error processing application.');
+    btn.innerText = "Generate Application PDF & Submit";
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

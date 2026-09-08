@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify OTP - NitiYog</title>
+  <link rel="stylesheet" href="/css/nitiyog.css">
+</head>
+<body>
+<div class="auth-shell">
+
+  <aside class="auth-panel--brand">
+    <div class="brand-logo">
+      <div class="brand-logo-mark">N</div>
+      <div class="brand-logo-text">Niti<span>yog</span></div>
+    </div>
+    <div class="brand-hero">
+      <h1>Verify Email Address</h1>
+      <p style="margin-top:16px;">Enter the 6-digit verification code sent via Brevo SMTP to activate your user account.</p>
+    </div>
+    <div class="brand-stats">
+      <div class="stat-item">
+        <div class="stat-value">100%</div>
+        <div class="stat-label">Verified Security</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="auth-panel--form">
+    <div class="auth-form-box">
+      <div class="step-row">
+        <div class="step-dot active">1</div>
+        <div class="step-line"></div>
+        <div class="step-dot active">2</div>
+        <div class="step-line"></div>
+        <div class="step-dot todo">3</div>
+      </div>
+
+      <div class="form-eyebrow">Step 2 of 3 — Email Verification</div>
+      <h2>Enter Security Code</h2>
+      <p class="form-sub">Verification code sent to <strong><%= email %></strong></p>
+
+      <form id="otpForm">
+        <input type="hidden" id="email" value="<%= email %>">
+        <div class="form-group">
+          <label class="form-label">6-Digit OTP</label>
+          <input type="text" id="otp" class="form-control" style="text-align:center; letter-spacing:8px; font-weight:bold;" maxlength="6" placeholder="000000" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Verify & Complete Signup</button>
+      </form>
+    </div>
+  </main>
+</div>
+
+<script>
+document.getElementById('otpForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const otp = document.getElementById('otp').value;
+
+  const res = await fetch('/api/auth/verify-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, otp })
+  });
+
+  const data = await res.json();
+  if (res.ok) {
+    alert('Verification successful!');
+    window.location.href = '/dashboard';
+  } else {
+    alert(data.error || 'Invalid OTP code');
+  }
+});
+</script>
+</body>
+</html>

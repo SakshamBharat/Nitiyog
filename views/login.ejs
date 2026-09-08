@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - NitiYog Platform</title>
+  <link rel="stylesheet" href="/css/nitiyog.css">
+</head>
+<body>
+<div class="auth-shell">
+
+  <!-- Left Side: Branding Panel -->
+  <aside class="auth-panel--brand">
+    <div class="brand-logo">
+      <div class="brand-logo-mark">N</div>
+      <div class="brand-logo-text">Niti<span>yog</span></div>
+    </div>
+
+    <div class="brand-hero">
+      <h1>Welcome Back to<br><em>NitiYog</em> Portal</h1>
+      <p style="margin-top:16px;">
+        Access your eligible government schemes, check application statuses, and track opportunities.
+      </p>
+    </div>
+  </aside>
+
+  <!-- Right Side: Authentication Form Panel -->
+  <main class="auth-panel--form">
+    <div class="auth-form-box">
+      <div class="form-eyebrow">Portal Authentication</div>
+      <h2>Sign in to your account</h2>
+      <p class="form-sub">Enter your credentials to access your dashboard.</p>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="email" class="form-control" placeholder="ramesh@example.com" required>
+        </div>
+
+        <div class="form-group pw-wrapper">
+          <label class="form-label">Password</label>
+          <input type="password" id="pw" class="form-control" placeholder="Enter password" required>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn btn-primary" style="margin-top:15px;">
+          Sign In <span>→</span>
+        </button>
+      </form>
+
+      <div class="divider" style="margin:20px 0;">or</div>
+
+      <button class="btn btn-ghost" onclick="window.location='/register'">
+        Don't have an account? Create One
+      </button>
+    </div>
+  </main>
+</div>
+
+<!-- Integrated Client-side JavaScript -->
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submitBtn = document.getElementById('submitBtn');
+  
+  // UI Feedback
+  submitBtn.innerText = "Authenticating...";
+  submitBtn.disabled = true;
+
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('pw').value;
+
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      // Role Check - Admin ke liye /admin/dashboard aur User ke liye /dashboard
+      if (data.user && data.user.role === 'ADMIN') {
+        window.location.href = '/admin/dashboard';
+      } else {
+        window.location.href = '/dashboard';
+      }
+    } else {
+      // Catch unverified email status
+      if (data.needVerification) {
+        alert(data.error);
+        window.location.href = `/verify-otp?email=${encodeURIComponent(email)}`;
+        return;
+      }
+      
+      alert(data.error || 'Invalid credentials');
+      submitBtn.innerText = "Sign In →";
+      submitBtn.disabled = false;
+    }
+  } catch (err) {
+    alert('Server error occurred during login. Please try again.');
+    submitBtn.innerText = "Sign In →";
+    submitBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
