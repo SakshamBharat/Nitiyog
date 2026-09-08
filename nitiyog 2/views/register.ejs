@@ -19,7 +19,7 @@
     <div class="brand-hero">
       <h1>Find Schemes<br>You're <em>Eligible</em><br>For — Instantly.</h1>
       <p style="margin-top:20px;">
-        India has 500+ government schemes for SC/ST, minority, and women entrepreneurs.
+        India has 500+ government schemes for SC/ST, minority, and women entrepreneurs. 
         Nitiyog matches you to the right ones in seconds — and helps you apply.
       </p>
     </div>
@@ -56,10 +56,6 @@
       <div class="form-eyebrow">Step 1 of 3 — Account Setup</div>
       <h2>Create your profile</h2>
       <p class="form-sub">Tell us about yourself so we can match you to the right schemes.</p>
-
-      <% if (typeof error !== 'undefined' && error) { %>
-        <div style="background:rgba(255,92,92,0.1);border:1px solid rgba(255,92,92,0.3);color:var(--error);border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:0.88rem;">❌ <%= error %></div>
-      <% } %>
 
       <form action="/register" method="POST" id="registerForm">
 

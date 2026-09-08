@@ -339,9 +339,12 @@ p  { line-height: 1.65; color: var(--grey-300); }
 
 /* ── Home / Dashboard ────────────────────── */
 .app-shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
   min-height: 100vh;
 }
 @media (max-width: 900px) {
+  .app-shell { grid-template-columns: 1fr; }
   .sidebar { display: none; }
 }
 

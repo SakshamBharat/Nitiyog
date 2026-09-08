@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/nitiyog.css">
+</head>
+<body>
+<div class="app-shell">
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-mark">N</div>
+      <div class="sidebar-logo-text">Niti<span>yog</span></div>
+    </div>
+    <span class="nav-section-label">Main</span>
+    <a href="/home" class="nav-item active"><span class="nav-icon">🏠</span> Dashboard</a>
+    <a href="#schemes" class="nav-item"><span class="nav-icon">🔍</span> Find Schemes <span class="nav-badge"><%= stats.matched %></span></a>
+    <a href="#applications" class="nav-item"><span class="nav-icon">✅</span> My Applications</a>
+    <span class="nav-section-label">Tools</span>
+    <a href="#" class="nav-item"><span class="nav-icon">📋</span> Eligibility Check</a>
+    <a href="#" class="nav-item"><span class="nav-icon">📄</span> Document Checklist</a>
+    <a href="#" class="nav-item"><span class="nav-icon">💬</span> Ask AI Guide</a>
+    <span class="nav-section-label">Account</span>
+    <a href="/logout" class="nav-item" style="color:var(--error);"><span class="nav-icon">🚪</span> Logout</a>
+    <div class="sidebar-profile">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:34px;height:34px;background:linear-gradient(135deg,var(--gold),var(--gold-dim));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;color:var(--navy-900);flex-shrink:0;">
+          <%= user.fname[0] %><%= user.lname ? user.lname[0] : '' %>
+        </div>
+        <div>
+          <div class="profile-name"><%= user.fname %> <%= user.lname||'' %></div>
+          <div class="profile-tag"><%= user.category||'User' %> · <%= (user.state||'India').split(' ')[0] %></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-search">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Search schemes, ministries…">
+      </div>
+      <div class="topbar-actions">
+        <div class="topbar-notif">🔔 <span class="notif-dot"></span></div>
+        <div class="topbar-avatar"><%= user.fname[0] %><%= user.lname ? user.lname[0] : '' %></div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <h2 style="font-size:1.5rem;margin-bottom:4px;">Good day, <%= user.fname %> 👋</h2>
+      <p style="font-size:0.88rem;color:var(--grey-500);"><span class="live-dot"></span> <%= stats.matched %> schemes matched to your profile</p>
+    </div>
+
+    <div class="hero-banner">
+      <div class="hero-label">✨ AI-Powered Match</div>
+      <h2>You're eligible for <span style="color:var(--gold);"><%= stats.matched %> active schemes</span> right now</h2>
+      <p>Based on your <strong style="color:var(--white);"><%= user.category||'profile' %></strong> category, <strong style="color:var(--white);"><%= user.state||'location' %></strong>, and <strong style="color:var(--white);"><%= user.business||'business' %></strong> type.</p>
+      <a href="#schemes" class="btn-find" style="display:inline-flex;">View All My Matches →</a>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="sc-icon">🎯</div><div class="sc-value gold"><%= stats.matched %></div><div class="sc-label">Matched Schemes</div></div>
+      <div class="stat-card"><div class="sc-icon">📝</div><div class="sc-value"><%= stats.applied %></div><div class="sc-label">Applications</div></div>
+      <div class="stat-card"><div class="sc-icon">✅</div><div class="sc-value green"><%= stats.approved %></div><div class="sc-label">Approved</div></div>
+      <div class="stat-card"><div class="sc-icon">💰</div><div class="sc-value gold"><%= stats.potential %></div><div class="sc-label">Potential Funding</div></div>
+    </div>
+
+    <!-- Matched Schemes -->
+    <div id="schemes">
+      <div class="section-head"><h3>🎯 Matched Schemes for You</h3><a href="#">View all →</a></div>
+      <div class="schemes-grid">
+        <% if (!schemes || schemes.length === 0) { %>
+          <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--grey-500);">
+            <div style="font-size:2rem;margin-bottom:12px;">📭</div>
+            <div>No schemes found yet. <a href="/admin/schemes/new" style="color:var(--gold);">Add schemes in admin panel →</a></div>
+          </div>
+        <% } %>
+        <% (schemes||[]).forEach((s, i) => {
+          const matchPct = Math.max(70, 96 - i * 5);
+          const badgeClass = matchPct >= 90 ? 'badge-high' : matchPct >= 80 ? 'badge-mid' : 'badge-low';
+        %>
+        <div class="scheme-card" onclick="window.location='/scheme/<%= s.id %>'">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div class="scheme-badge <%= badgeClass %>"><span class="badge-dot"></span><%= matchPct %>% Match</div>
+            <% if (s.deadline) { %><span style="font-size:0.7rem;color:var(--error);font-weight:600;">⚠ Deadline</span><% } %>
+          </div>
+          <h3><%= s.title %></h3>
+          <div class="tag-row">
+            <% (s.category||[]).slice(0,3).forEach(c=>{ %><span class="tag"><%= c %></span><% }) %>
+            <% (s.state||[]).includes('All India') ? '<span class="tag">All India</span>' : '' %>
+          </div>
+          <div class="match-score-bar">
+            <div class="match-label-row"><span>Match Score</span><span class="match-pct"><%= matchPct %>%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:<%= matchPct %>%;"></div></div>
+          </div>
+          <p><%= (s.description||'').substring(0,100) %>...</p>
+          <div class="scheme-card-footer">
+            <span class="scheme-ministry"><%= (s.ministry||'').substring(0,25) %></span>
+            <a href="/scheme/<%= s.id %>" class="scheme-apply-btn" onclick="event.stopPropagation()">View Details</a>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- Applications -->
+    <div id="applications">
+      <div class="section-head"><h3>📋 My Applications</h3></div>
+      <div style="background:var(--navy-700);border:1px solid var(--navy-600);border-radius:var(--radius-md);overflow:hidden;margin-bottom:36px;">
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:0;padding:14px 24px;border-bottom:1px solid var(--navy-600);font-size:0.75rem;color:var(--grey-700);font-weight:500;text-transform:uppercase;letter-spacing:0.06em;">
+          <div>Scheme</div><div>Ministry</div><div>Applied On</div><div>Status</div>
+        </div>
+        <% if (!applications || !applications.length) { %>
+          <div style="text-align:center;padding:40px;color:var(--grey-500);font-size:0.9rem;">No applications yet. Browse schemes above and apply!</div>
+        <% } %>
+        <% (applications||[]).forEach(app => {
+          const color = app.status==='Approved' ? 'var(--emerald)' : app.status==='In Progress' ? 'var(--gold)' : 'var(--error)';
+        %>
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:0;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,0.04);align-items:center;" onmouseover="this.style.background='var(--navy-600)'" onmouseout="this.style.background='transparent'">
+          <div style="font-size:0.88rem;font-weight:500;"><%= app.title %></div>
+          <div style="font-size:0.8rem;color:var(--grey-500);"><%= (app.ministry||'').substring(0,20) %></div>
+          <div style="font-size:0.8rem;color:var(--grey-500);"><%= app.applied_at ? new Date(app.applied_at).toLocaleDateString('en-IN') : '—' %></div>
+          <div style="font-size:0.78rem;font-weight:600;color:<%= color %>;"><%= app.status %></div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- AI Assistant -->
+    <div style="background:linear-gradient(130deg,var(--navy-700),var(--navy-900));border:1px solid var(--navy-600);border-radius:var(--radius-md);padding:28px;display:flex;align-items:center;gap:24px;margin-bottom:36px;">
+      <div style="font-size:2.5rem;flex-shrink:0;">🤖</div>
+      <div style="flex:1;">
+        <h3 style="margin-bottom:6px;">Ask Nitiyog AI Guide</h3>
+        <p style="font-size:0.85rem;margin:0;">Have a question about any scheme? Ask in Hindi or English.</p>
+      </div>
+      <button style="background:var(--gold);color:var(--navy-900);padding:12px 24px;border-radius:var(--radius-sm);border:none;font-weight:600;font-size:0.88rem;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;flex-shrink:0;">Ask a Question →</button>
+    </div>
+  </main>
+</div>
+
+<script>
+window.addEventListener('load', () => {
+  document.querySelectorAll('.bar-fill').forEach(bar => {
+    const target = bar.style.width;
+    bar.style.width = '0%';
+    setTimeout(() => { bar.style.width = target; }, 400);
+  });
+});
+</script>
+</body>
+</html>

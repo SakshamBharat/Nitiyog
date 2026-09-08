@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/nitiyog.css">
+  <style>
+    .admin-shell { display:grid; grid-template-columns:220px 1fr; min-height:100vh; }
+    .admin-sidebar { background:var(--navy-900); padding:28px 16px; display:flex; flex-direction:column; gap:4px; position:fixed; left:0; top:0; bottom:0; width:220px; overflow-y:auto; }
+    .admin-main { margin-left:220px; padding:32px 36px; }
+    .users-table { background:var(--navy-700); border:1px solid var(--navy-600); border-radius:14px; overflow:hidden; }
+    .table-head { display:grid; grid-template-columns:2fr 1.5fr 1.5fr 1fr 1fr 1.5fr; padding:12px 20px; border-bottom:1px solid var(--navy-600); font-size:0.73rem; color:var(--grey-700); font-weight:600; text-transform:uppercase; letter-spacing:0.06em; }
+    .table-row { display:grid; grid-template-columns:2fr 1.5fr 1.5fr 1fr 1fr 1.5fr; padding:14px 20px; border-bottom:1px solid rgba(255,255,255,0.04); align-items:center; font-size:0.85rem; transition:background 0.15s; }
+    .table-row:hover { background:var(--navy-600); }
+    .table-row:last-child { border-bottom:none; }
+    .cat-chip { background:rgba(244,166,35,0.1); color:var(--gold); font-size:0.72rem; padding:2px 8px; border-radius:100px; }
+    .user-name { font-weight:500; color:var(--white); }
+    .user-sub { font-size:0.75rem; color:var(--grey-500); margin-top:1px; }
+  </style>
+</head>
+<body>
+<div class="admin-shell">
+  <nav class="admin-sidebar">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;">
+      <div style="width:34px;height:34px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.9rem;color:var(--navy-900);">N</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;">Niti<span style="color:var(--gold);">yog</span></div>
+    </div>
+    <a href="/admin" class="nav-item"><span class="nav-icon">📊</span> Dashboard</a>
+    <a href="/admin/schemes" class="nav-item"><span class="nav-icon">📋</span> Manage Schemes</a>
+    <a href="/admin/schemes/new" class="nav-item"><span class="nav-icon">➕</span> Add Scheme</a>
+    <a href="/admin/users" class="nav-item active"><span class="nav-icon">👥</span> Users</a>
+    <div style="margin-top:auto;padding-top:20px;border-top:1px solid var(--navy-700);">
+      <a href="/logout" class="nav-item" style="color:var(--error);"><span class="nav-icon">🚪</span> Logout</a>
+    </div>
+  </nav>
+
+  <main class="admin-main">
+    <div style="margin-bottom:24px;">
+      <h1 style="font-size:1.4rem;font-weight:700;margin-bottom:4px;">Registered Users</h1>
+      <p style="color:var(--grey-500);font-size:0.85rem;">Entrepreneurs registered on Nitiyog (latest 100)</p>
+    </div>
+
+    <div class="users-table">
+      <div class="table-head">
+        <div>Name</div><div>Mobile</div><div>State</div><div>Category</div><div>Business</div><div>Joined</div>
+      </div>
+      <% if (!users.length) { %>
+        <div style="text-align:center;padding:60px;color:var(--grey-500);">No users registered yet.</div>
+      <% } %>
+      <% users.forEach(u=>{ %>
+      <div class="table-row">
+        <div><div class="user-name"><%= u.fname %> <%= u.lname %></div><div class="user-sub"><%= u.email||'' %></div></div>
+        <div style="color:var(--grey-300);"><%= u.phone||'—' %></div>
+        <div style="color:var(--grey-300);"><%= u.state||'—' %></div>
+        <div><% if(u.category){ %><span class="cat-chip"><%= u.category %></span><% }else{ %>—<% } %></div>
+        <div style="color:var(--grey-500);font-size:0.8rem;"><%= u.business||'—' %></div>
+        <div style="color:var(--grey-700);font-size:0.78rem;"><%= u.created_at ? new Date(u.created_at).toLocaleDateString('en-IN') : '—' %></div>
+      </div>
+      <% }) %>
+    </div>
+  </main>
+</div>
+</body>
+</html>
