@@ -1,0 +1,612 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>NitiYog — Saksham Bharat</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/css/app.css"
+  >
+</head>
+
+<body>
+
+<header class="navbar">
+
+  <div class="brand">
+    <div class="brand-logo">N</div>
+
+    <div>
+      <strong>Niti<span>yog</span></strong>
+
+      <small>
+        Saksham Bharat
+      </small>
+    </div>
+  </div>
+
+  <nav>
+
+    <% if (user) { %>
+
+      <div class="user-pill">
+        <span class="user-pill-name">
+          <%= user.firstName %>
+        </span>
+
+        <span class="verified-tick" aria-label="Verified user">
+          ✓
+        </span>
+      </div>
+
+      <a href="/dashboard">
+        Dashboard
+      </a>
+
+      <button
+        class="nav-button"
+        onclick="logout()"
+      >
+        Logout
+      </button>
+
+    <% } else { %>
+
+      <a href="/login">
+        Sign in
+      </a>
+
+      <a
+        href="/register"
+        class="nav-primary"
+      >
+        Create account
+      </a>
+
+    <% } %>
+
+  </nav>
+
+</header>
+
+
+<main>
+
+  <section class="search-showcase">
+
+    <div class="search-header">
+      <span class="eyebrow-dark">
+        Scheme discovery
+      </span>
+
+      <h2>
+        Search your scheme
+      </h2>
+    </div>
+
+    <p class="search-subtext">
+      Describe your problem and explore government schemes that can help with
+      income support, education, health, jobs, women empowerment, and more.
+    </p>
+
+    <div class="search-panel">
+
+      <form id="schemeSearchForm" class="search-form" autocomplete="off">
+        <div class="search-input-wrap">
+          <input
+            id="schemeSearchInput"
+            type="text"
+            placeholder="Search schemes, benefits, or categories"
+            aria-label="Search schemes"
+          >
+
+          <button
+            id="searchButton"
+            type="submit"
+            class="button primary"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+
+      <div class="search-pills" aria-label="Scheme categories">
+        <button class="filter-chip active" data-filter="all" type="button">
+          All
+        </button>
+        <button class="filter-chip" data-filter="Agriculture" type="button">
+          Agriculture
+        </button>
+        <button class="filter-chip" data-filter="Education" type="button">
+          Education
+        </button>
+        <button class="filter-chip" data-filter="Healthcare" type="button">
+          Healthcare
+        </button>
+        <button class="filter-chip" data-filter="Women" type="button">
+          Women
+        </button>
+        <button class="filter-chip" data-filter="Employment" type="button">
+          Employment
+        </button>
+      </div>
+
+    </div>
+
+    <div class="scheme-results-header">
+      <h3 id="searchSummary">
+        Popular schemes
+      </h3>
+
+      <span id="resultCount">
+        6 schemes
+      </span>
+    </div>
+
+    <div id="schemeResults" class="scheme-grid"></div>
+
+  </section>
+
+
+  <section class="leaders-section">
+
+    <div class="leaders-header">
+      <span class="eyebrow-dark">
+        Leadership
+      </span>
+
+      <h2>
+        Public service leadership
+      </h2>
+    </div>
+
+    <div class="leaders-grid">
+
+      <article class="leader-card">
+        <div class="leader-photo">
+          <img
+            src="https://thecommunemag.com/wp-content/uploads/2024/10/jammu-and-kashmir-narendra-modi-assembly-polls.jpg"
+            alt="Narendra Modi"
+          >
+        </div>
+
+        <div class="leader-copy">
+          <h3>
+            Narendra Modi
+          </h3>
+
+          <p>
+            Prime Minister of India
+          </p>
+        </div>
+      </article>
+
+
+      <article class="leader-card">
+        <div class="leader-photo">
+          <img
+            src="https://cdn.siasat.com/wp-content/uploads/2024/04/Untitled-design-2024-04-30T195045.378.jpg"
+            alt="Amit Shah"
+          >
+        </div>
+
+        <div class="leader-copy">
+          <h3>
+            Amit Shah
+          </h3>
+
+          <p>
+            Union Home Minister
+          </p>
+        </div>
+      </article>
+
+
+      <article class="leader-card">
+        <div class="leader-photo">
+          <img
+            src="https://th.bing.com/th/id/OIP.U4GxFFTAp_Kr9Q1HVL0rlAHaHa?w=181&h=182&c=7&r=0&o=7&dpr=1.6&pid=1.7&rm=3"
+            alt="Yogi Adityanath"
+          >
+        </div>
+
+        <div class="leader-copy">
+          <h3>
+            Yogi Adityanath
+          </h3>
+
+          <p>
+            Chief Minister of Uttar Pradesh
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <section class="developer-corner">
+
+    <div class="developers-header">
+      <span class="eyebrow-dark">
+        Developer corner
+      </span>
+
+      <h2>
+        Meet the project team
+      </h2>
+    </div>
+
+    <div class="developer-grid">
+
+      <article class="developer-card">
+        <div class="developer-photo">
+          <img
+            src="https://res.cloudinary.com/ddbp0hpb0/image/upload/v1788970276/Saksham_sotcyy.png"
+            alt="Saksham Chaurasia"
+          >
+        </div>
+
+        <div class="developer-copy">
+          <h3>
+            Saksham Chaurasia
+          </h3>
+
+          <p class="developer-role">
+            Project Head &amp; Backend Developer
+          </p>
+
+          <p class="developer-meta">
+            B.Tech CSE (AI) — Pre-Final Year
+          </p>
+        </div>
+      </article>
+
+      <article class="developer-card">
+        <div class="developer-photo">
+          <img
+            src="https://res.cloudinary.com/ddbp0hpb0/image/upload/v1788970276/maulik_waddfg.png"
+            alt="MAULIK KESARWANI"
+          >
+        </div>
+
+        <div class="developer-copy">
+          <h3>
+            MAULIK KESARWANI
+          </h3>
+
+          <p class="developer-role">
+            Project Supervisor &amp; Frontend Developer
+          </p>
+
+          <p class="developer-meta">
+            B.Tech CSE (AI) — Pre-Final Year
+          </p>
+        </div>
+      </article>
+
+      <article class="developer-card">
+        <div class="developer-photo">
+          <img
+            src="https://res.cloudinary.com/ddbp0hpb0/image/upload/fl_preserve_transparency/v1788970424/Screenshot_2026-09-09_214231_xlovhb.jpg?_s=public-apps"
+            alt="Shiva Kumar Tiwari"
+          >
+        </div>
+
+        <div class="developer-copy">
+          <h3>
+            Shiva Kumar Tiwari
+          </h3>
+
+          <p class="developer-role">
+            Assistant Project Head &amp; Database Developer
+          </p>
+
+          <p class="developer-meta">
+            B.Tech CSE (AI) — Pre-Final Year
+          </p>
+        </div>
+      </article>
+
+      <article class="developer-card">
+        <div class="developer-photo">
+          <img
+            src="https://res.cloudinary.com/ddbp0hpb0/image/upload/v1788970276/muskan_hngvix.png"
+            alt="Muskan Chaurasiya"
+          >
+        </div>
+
+        <div class="developer-copy">
+          <h3>
+            Muskan Chaurasiya
+          </h3>
+
+          <p class="developer-role">
+            Project Analyst
+          </p>
+
+          <p class="developer-meta">
+            B.Tech CSE (AI) — 2nd Year
+          </p>
+        </div>
+      </article>
+
+      <article class="developer-card">
+        <div class="developer-photo">
+          <img
+            src="https://res.cloudinary.com/ddbp0hpb0/image/upload/v1788970277/ayushi_uxr1um.png"
+            alt="AyusHi Shukla"
+          >
+        </div>
+
+        <div class="developer-copy">
+          <h3>
+            AyusHi Shukla
+          </h3>
+
+          <p class="developer-role">
+            Project Collaborator &amp; spokesperson
+          </p>
+
+          <p class="developer-meta">
+            B.Tech CSE (AI) — Pre-Final Year
+          </p>
+        </div>
+      </article>
+
+      <article class="developer-card">
+        <div class="developer-photo">
+          <img
+            src="https://res.cloudinary.com/ddbp0hpb0/image/upload/v1788970275/ayush_m9ltfc.png"
+            alt="Ayush Gupta"
+          >
+        </div>
+
+        <div class="developer-copy">
+          <h3>
+            Ayush Gupta
+          </h3>
+
+          <p class="developer-role">
+            Graphic Designer &amp; Frontend Developer
+          </p>
+
+          <p class="developer-meta">
+            B.Tech CSE (AI) — Pre-Final Year
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <section class="features">
+
+    <div class="feature">
+      <div class="feature-icon">✓</div>
+
+      <h3>Eligible schemes</h3>
+
+      <p>
+        Find schemes based on your
+        profile and eligibility.
+      </p>
+    </div>
+
+
+    <div class="feature">
+      <div class="feature-icon">↗</div>
+
+      <h3>Track applications</h3>
+
+      <p>
+        Keep application information
+        available in one place.
+      </p>
+    </div>
+
+
+    <div class="feature">
+      <div class="feature-icon">⌁</div>
+
+      <h3>Citizen profile</h3>
+
+      <p>
+        Maintain your information for
+        personalized services.
+      </p>
+    </div>
+
+
+    <div class="feature">
+      <div class="feature-icon">🔒</div>
+
+      <h3>Secure access</h3>
+
+      <p>
+        Account authentication with
+        verified email access.
+      </p>
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer>
+  <strong>NitiYog</strong>
+  · Saksham Bharat
+</footer>
+
+
+<script>
+
+  const schemes = [
+    {
+      title: "PM-Kisan Samman Nidhi",
+      category: "Agriculture",
+      description: "Direct income support for eligible farmer families across India.",
+      tag: "Support",
+      exploreUrl: "https://pmkisan.gov.in/"
+    },
+    {
+      title: "Pradhan Mantri Ujjwala Yojana",
+      category: "Women",
+      description: "Free LPG connections and clean cooking support for women households.",
+      tag: "Women",
+      exploreUrl: "https://www.pmuy.gov.in/"
+    },
+    {
+      title: "Beti Bachao Beti Padhao",
+      category: "Education",
+      description: "Empowerment programme focused on education, health, and safety of girls.",
+      tag: "Girls",
+      exploreUrl: "https://wcd.nic.in/schemes/beti-bachao-beti-padhao"
+    },
+    {
+      title: "Ayushman Bharat",
+      category: "Healthcare",
+      description: "Health insurance coverage for vulnerable families and senior citizens.",
+      tag: "Health",
+      exploreUrl: "https://www.pmjay.gov.in/"
+    },
+    {
+      title: "Skill India Mission",
+      category: "Employment",
+      description: "Skill development and career support for youth, workers, and job seekers.",
+      tag: "Jobs",
+      exploreUrl: "https://www.skillindia.gov.in/"
+    },
+    {
+      title: "National Education Mission",
+      category: "Education",
+      description: "Education access, digital learning support, and inclusive school upliftment.",
+      tag: "Learning",
+      exploreUrl: "https://www.india.gov.in/"
+    }
+  ];
+
+  const resultsContainer = document.getElementById("schemeResults");
+  const searchForm = document.getElementById("schemeSearchForm");
+  const searchInput = document.getElementById("schemeSearchInput");
+  const searchButton = document.getElementById("searchButton");
+  const resultCount = document.getElementById("resultCount");
+  const searchSummary = document.getElementById("searchSummary");
+  const filterButtons = document.querySelectorAll(".filter-chip");
+
+  let activeFilter = "all";
+
+  function renderSchemes(items) {
+    resultsContainer.innerHTML = "";
+
+    if (!items.length) {
+      resultsContainer.innerHTML = `
+        <div class="scheme-empty">
+          <h4>No schemes found</h4>
+          <p>Try another keyword or choose a different category.</p>
+        </div>
+      `;
+
+      resultCount.textContent = "0 schemes";
+      return;
+    }
+
+    items.forEach((scheme) => {
+      const card = document.createElement("article");
+      card.className = "scheme-card";
+      card.innerHTML = `
+        <div class="scheme-tag">${scheme.tag}</div>
+        <h4>${scheme.title}</h4>
+        <p>${scheme.description}</p>
+        <div class="scheme-meta">
+          <span>${scheme.category}</span>
+          <a href="${scheme.exploreUrl}" target="_blank" rel="noreferrer">Explore</a>
+        </div>
+      `;
+      resultsContainer.appendChild(card);
+    });
+
+    resultCount.textContent = `${items.length} scheme${items.length === 1 ? "" : "s"}`;
+  }
+
+  function applySearch() {
+    const query = searchInput.value.trim().toLowerCase();
+
+    const filtered = schemes.filter((scheme) => {
+      const matchesFilter = activeFilter === "all" || scheme.category === activeFilter;
+      const matchesQuery = !query || [
+        scheme.title,
+        scheme.category,
+        scheme.description,
+        scheme.tag
+      ].some((value) => value.toLowerCase().includes(query));
+
+      return matchesFilter && matchesQuery;
+    });
+
+    searchSummary.textContent = query
+      ? `Search results for “${searchInput.value.trim()}”`
+      : activeFilter === "all"
+        ? "Popular schemes"
+        : `${activeFilter} schemes`;
+
+    renderSchemes(filtered);
+  }
+
+  searchInput.addEventListener("input", applySearch);
+
+  searchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    applySearch();
+  });
+
+  searchButton.addEventListener("click", applySearch);
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      activeFilter = button.dataset.filter;
+
+      filterButtons.forEach((chip) => {
+        chip.classList.toggle("active", chip === button);
+      });
+
+      applySearch();
+    });
+  });
+
+  renderSchemes(schemes);
+
+async function logout() {
+
+  await fetch(
+    "/api/auth/logout",
+    {
+      method: "POST"
+    }
+  );
+
+  window.location.href =
+    "/login";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>NitiYog Admin Dashboard</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/css/app.css"
+  >
+
+</head>
+
+
+<body class="admin-body">
+
+
+<header class="admin-navbar">
+
+  <div class="brand">
+
+    <div class="brand-logo">
+      N
+    </div>
+
+    <div>
+
+      <strong>
+        Niti<span>yog</span>
+      </strong>
+
+      <small>
+        Administration
+      </small>
+
+    </div>
+
+  </div>
+
+
+  <div class="admin-user">
+
+    <span>
+      <%= user.email %>
+    </span>
+
+    <button
+      onclick="logout()"
+      class="logout-button"
+    >
+      Logout
+    </button>
+
+  </div>
+
+</header>
+
+
+<main class="admin-container">
+
+  <div class="admin-heading">
+
+    <div>
+
+      <span class="eyebrow-dark">
+        Administration
+      </span>
+
+      <h1>
+        Platform overview
+      </h1>
+
+      <p>
+        Manage citizens, schemes and applications.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <section class="stats-grid">
+
+    <div class="stat-card">
+
+      <span>
+        Registered Citizens
+      </span>
+
+      <strong>
+        <%= stats.users %>
+      </strong>
+
+      <small>
+        Active citizen accounts
+      </small>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <span>
+        Government Schemes
+      </span>
+
+      <strong>
+        <%= stats.schemes %>
+      </strong>
+
+      <small>
+        Scheme records
+      </small>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <span>
+        Applications
+      </span>
+
+      <strong>
+        <%= stats.applications %>
+      </strong>
+
+      <small>
+        Citizen applications
+      </small>
+
+    </div>
+
+  </section>
+
+
+  <section class="admin-panels">
+
+    <div class="admin-panel">
+
+      <div class="panel-icon">
+        👥
+      </div>
+
+      <h3>
+        Citizen management
+      </h3>
+
+      <p>
+        View users, account status and
+        verification information.
+      </p>
+
+      <button>
+        Manage citizens →
+      </button>
+
+    </div>
+
+
+    <div class="admin-panel">
+
+      <div class="panel-icon">
+        📋
+      </div>
+
+      <h3>
+        Scheme management
+      </h3>
+
+      <p>
+        Add government schemes and
+        configure eligibility criteria.
+      </p>
+
+      <button>
+        Manage schemes →
+      </button>
+
+    </div>
+
+
+    <div class="admin-panel">
+
+      <div class="panel-icon">
+        📊
+      </div>
+
+      <h3>
+        Applications
+      </h3>
+
+      <p>
+        Review and update citizen
+        application statuses.
+      </p>
+
+      <button>
+        View applications →
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+
+async function logout() {
+
+  await fetch(
+    "/api/auth/logout",
+    {
+      method: "POST"
+    }
+  );
+
+  window.location.href =
+    "/admin/login";
+}
+
+</script>
+
+</body>
+</html>

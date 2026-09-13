@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Create Account | NitiYog</title>
+
+  <link
+    rel="stylesheet"
+    href="/css/app.css"
+  >
+
+</head>
+
+
+<body>
+
+  <div class="auth-page">
+
+    <div class="auth-card">
+
+      <div class="admin-logo">
+        N
+      </div>
+
+      <div class="eyebrow-dark">
+        NitiYog
+      </div>
+
+      <h1>
+        Create your account
+      </h1>
+
+      <p>
+        Register to discover government schemes
+        you may be eligible for.
+      </p>
+
+
+      <form id="registerForm">
+
+        <div
+          id="message"
+          class="error-box"
+          style="display:none;"
+        ></div>
+
+
+        <!-- NAME -->
+
+        <div class="form-row">
+
+          <div class="form-group">
+
+            <label for="firstName">
+              First name
+            </label>
+
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              placeholder="First name"
+              required
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="lastName">
+              Last name
+            </label>
+
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              placeholder="Last name"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+          <label for="email">
+            Email address
+          </label>
+
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            required
+          >
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+          <label for="password">
+            Password
+          </label>
+
+          <div class="password-input">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Minimum 8 characters"
+              minlength="8"
+              autocomplete="new-password"
+              required
+            >
+
+            <button
+              type="button"
+              class="toggle-password"
+              data-target="password"
+              aria-label="Show password"
+            >
+              Show
+            </button>
+          </div>
+
+        </div>
+
+
+        <!-- CATEGORY -->
+
+        <div class="form-group">
+
+          <label for="category">
+            Category
+          </label>
+
+          <select
+            id="category"
+            name="category"
+            required
+          >
+
+            <option value="">
+              Select category
+            </option>
+
+            <option value="GENERAL">
+              General
+            </option>
+
+            <option value="OBC">
+              OBC
+            </option>
+
+            <option value="SC">
+              SC
+            </option>
+
+            <option value="ST">
+              ST
+            </option>
+
+            <option value="EWS">
+              EWS
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- GENDER + AGE -->
+
+        <div class="form-row">
+
+          <div class="form-group">
+
+            <label for="gender">
+              Gender
+            </label>
+
+            <select
+              id="gender"
+              name="gender"
+              required
+            >
+
+              <option value="">
+                Select gender
+              </option>
+
+              <option value="MALE">
+                Male
+              </option>
+
+              <option value="FEMALE">
+                Female
+              </option>
+
+              <option value="OTHER">
+                Other
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="age">
+              Age
+            </label>
+
+            <input
+              id="age"
+              name="age"
+              type="number"
+              min="18"
+              max="100"
+              placeholder="Age"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- MOBILE -->
+
+        <div class="form-group">
+
+          <label for="mobile">
+            Mobile number
+          </label>
+
+          <input
+            id="mobile"
+            name="mobile"
+            type="tel"
+            inputmode="numeric"
+            maxlength="10"
+            pattern="[6-9][0-9]{9}"
+            placeholder="10-digit mobile number"
+            required
+          >
+
+        </div>
+
+
+        <!-- STATE -->
+
+        <div class="form-group">
+
+          <label for="state">
+            State
+          </label>
+
+          <select
+            id="state"
+            name="state"
+            required
+          >
+            <option value="">
+              Select state
+            </option>
+          </select>
+
+        </div>
+
+
+        <!-- CITY + PINCODE -->
+
+        <div class="form-row">
+
+          <div class="form-group">
+
+            <label for="city">
+              City
+            </label>
+
+            <select
+              id="city"
+              name="city"
+              required
+              disabled
+            >
+              <option value="">
+                Select city
+              </option>
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="pincode">
+              PIN code
+            </label>
+
+            <input
+              id="pincode"
+              name="pincode"
+              type="text"
+              inputmode="numeric"
+              maxlength="6"
+              pattern="[0-9]{6}"
+              placeholder="6-digit PIN"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="submit"
+          id="registerButton"
+        >
+          Create account →
+        </button>
+
+      </form>
+
+
+      <p class="auth-footer">
+
+        Already have an account?
+
+        <a href="/login">
+          Login
+        </a>
+
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const form =
+      document.getElementById("registerForm");
+
+    const message =
+      document.getElementById("message");
+
+    const registerButton =
+      document.getElementById("registerButton");
+
+    const stateCityMap = {
+      "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur"],
+      "Arunachal Pradesh": ["Itanagar", "Naharlagun", "Tawang"],
+      "Assam": ["Guwahati", "Dibrugarh", "Silchar"],
+      "Bihar": ["Patna", "Gaya", "Muzaffarpur"],
+      "Chhattisgarh": ["Raipur", "Bilaspur", "Bhilai"],
+      "Goa": ["Panaji", "Margao", "Mapusa"],
+      "Gujarat": ["Ahmedabad", "Surat", "Vadodara"],
+      "Haryana": ["Gurugram", "Faridabad", "Panipat"],
+      "Himachal Pradesh": ["Shimla", "Mandi", "Solan"],
+      "Jharkhand": ["Ranchi", "Jamshedpur", "Dhanbad"],
+      "Karnataka": ["Bengaluru", "Mysuru", "Hubballi"],
+      "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode"],
+      "Madhya Pradesh": ["Bhopal", "Indore", "Jabalpur"],
+      "Maharashtra": ["Mumbai", "Pune", "Nagpur"],
+      "Manipur": ["Imphal", "Thoubal", "Churachandpur"],
+      "Meghalaya": ["Shillong", "Tura", "Jowai"],
+      "Mizoram": ["Aizawl", "Lunglei", "Champhai"],
+      "Nagaland": ["Kohima", "Dimapur", "Mokokchung"],
+      "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela"],
+      "Punjab": ["Chandigarh", "Ludhiana", "Amritsar"],
+      "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur"],
+      "Sikkim": ["Gangtok", "Namchi", "Mangan"],
+      "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
+      "Telangana": ["Hyderabad", "Warangal", "Nizamabad"],
+      "Tripura": ["Agartala", "Udaipur", "Khowai"],
+      "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra"],
+      "Uttarakhand": ["Dehradun", "Haridwar", "Rishikesh"],
+      "West Bengal": ["Kolkata", "Durgapur", "Asansol"]
+    };
+
+    const stateSelect = document.getElementById("state");
+    const citySelect = document.getElementById("city");
+
+    Object.keys(stateCityMap).forEach((state) => {
+      const option = document.createElement("option");
+      option.value = state;
+      option.textContent = state;
+      stateSelect.appendChild(option);
+    });
+
+    function populateCities(selectedState) {
+      citySelect.innerHTML = '<option value="">Select city</option>';
+      citySelect.disabled = !selectedState;
+
+      if (!selectedState) {
+        return;
+      }
+
+      const cities = stateCityMap[selectedState] || [];
+      cities.forEach((city) => {
+        const option = document.createElement("option");
+        option.value = city;
+        option.textContent = city;
+        citySelect.appendChild(option);
+      });
+    }
+
+    stateSelect.addEventListener("change", (event) => {
+      populateCities(event.target.value);
+    });
+
+    document.querySelectorAll(".toggle-password").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = document.getElementById(button.dataset.target);
+        if (!target) return;
+
+        const isPassword = target.type === "password";
+        target.type = isPassword ? "text" : "password";
+        button.textContent = isPassword ? "Hide" : "Show";
+        button.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+      });
+    });
+
+
+    function showMessage(text, type = "error") {
+
+      message.textContent = text;
+
+      message.style.display = "block";
+
+      message.className =
+        type === "success"
+          ? "success-box"
+          : "error-box";
+
+    }
+
+
+    form.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+
+        const formData =
+          new FormData(form);
+
+
+        const data =
+          Object.fromEntries(
+            formData.entries()
+          );
+
+
+        registerButton.disabled = true;
+
+        registerButton.textContent =
+          "Creating account...";
+
+
+        message.style.display = "none";
+
+
+        try {
+
+          const response =
+            await fetch(
+              "/api/auth/register",
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body: JSON.stringify(data)
+              }
+            );
+
+
+          const result =
+            await response.json();
+
+
+          if (!response.ok) {
+
+            showMessage(
+              result.error ||
+              "Unable to create account."
+            );
+
+            registerButton.disabled = false;
+
+            registerButton.textContent =
+              "Create account →";
+
+            return;
+          }
+
+
+          showMessage(
+            result.message ||
+            "Account created successfully.",
+            "success"
+          );
+
+
+          /*
+           * Send the user to OTP page.
+           */
+
+          setTimeout(() => {
+
+            window.location.href =
+              "/verify-otp?email=" +
+              encodeURIComponent(data.email);
+
+          }, 700);
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          showMessage(
+            "Unable to connect to the server."
+          );
+
+          registerButton.disabled = false;
+
+          registerButton.textContent =
+            "Create account →";
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>
