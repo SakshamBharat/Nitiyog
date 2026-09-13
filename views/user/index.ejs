@@ -458,126 +458,30 @@
 
 <script>
 
-  const schemes = [
-    {
-      title: "PM-Kisan Samman Nidhi",
-      category: "Agriculture",
-      description: "Direct income support for eligible farmer families across India.",
-      tag: "Support",
-      exploreUrl: "https://pmkisan.gov.in/"
-    },
-    {
-      title: "Pradhan Mantri Ujjwala Yojana",
-      category: "Women",
-      description: "Free LPG connections and clean cooking support for women households.",
-      tag: "Women",
-      exploreUrl: "https://www.pmuy.gov.in/"
-    },
-    {
-      title: "Beti Bachao Beti Padhao",
-      category: "Education",
-      description: "Empowerment programme focused on education, health, and safety of girls.",
-      tag: "Girls",
-      exploreUrl: "https://wcd.nic.in/schemes/beti-bachao-beti-padhao"
-    },
-    {
-      title: "Ayushman Bharat",
-      category: "Healthcare",
-      description: "Health insurance coverage for vulnerable families and senior citizens.",
-      tag: "Health",
-      exploreUrl: "https://www.pmjay.gov.in/"
-    },
-    {
-      title: "Skill India Mission",
-      category: "Employment",
-      description: "Skill development and career support for youth, workers, and job seekers.",
-      tag: "Jobs",
-      exploreUrl: "https://www.skillindia.gov.in/"
-    },
-    {
-      title: "National Education Mission",
-      category: "Education",
-      description: "Education access, digital learning support, and inclusive school upliftment.",
-      tag: "Learning",
-      exploreUrl: "https://www.india.gov.in/"
-    }
-  ];
-
-  const resultsContainer = document.getElementById("schemeResults");
   const searchForm = document.getElementById("schemeSearchForm");
   const searchInput = document.getElementById("schemeSearchInput");
-  const searchButton = document.getElementById("searchButton");
-  const resultCount = document.getElementById("resultCount");
-  const searchSummary = document.getElementById("searchSummary");
   const filterButtons = document.querySelectorAll(".filter-chip");
 
   let activeFilter = "all";
 
-  function renderSchemes(items) {
-    resultsContainer.innerHTML = "";
-
-    if (!items.length) {
-      resultsContainer.innerHTML = `
-        <div class="scheme-empty">
-          <h4>No schemes found</h4>
-          <p>Try another keyword or choose a different category.</p>
-        </div>
-      `;
-
-      resultCount.textContent = "0 schemes";
-      return;
-    }
-
-    items.forEach((scheme) => {
-      const card = document.createElement("article");
-      card.className = "scheme-card";
-      card.innerHTML = `
-        <div class="scheme-tag">${scheme.tag}</div>
-        <h4>${scheme.title}</h4>
-        <p>${scheme.description}</p>
-        <div class="scheme-meta">
-          <span>${scheme.category}</span>
-          <a href="${scheme.exploreUrl}" target="_blank" rel="noreferrer">Explore</a>
-        </div>
-      `;
-      resultsContainer.appendChild(card);
-    });
-
-    resultCount.textContent = `${items.length} scheme${items.length === 1 ? "" : "s"}`;
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>'"]/g, (character) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "'": "&#39;",
+      "\"": "&quot;"
+    }[character]));
   }
-
-  function applySearch() {
-    const query = searchInput.value.trim().toLowerCase();
-
-    const filtered = schemes.filter((scheme) => {
-      const matchesFilter = activeFilter === "all" || scheme.category === activeFilter;
-      const matchesQuery = !query || [
-        scheme.title,
-        scheme.category,
-        scheme.description,
-        scheme.tag
-      ].some((value) => value.toLowerCase().includes(query));
-
-      return matchesFilter && matchesQuery;
-    });
-
-    searchSummary.textContent = query
-      ? `Search results for “${searchInput.value.trim()}”`
-      : activeFilter === "all"
-        ? "Popular schemes"
-        : `${activeFilter} schemes`;
-
-    renderSchemes(filtered);
-  }
-
-  searchInput.addEventListener("input", applySearch);
 
   searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    applySearch();
+    const params = new URLSearchParams({
+      query: searchInput.value.trim() || "popular government schemes",
+      category: activeFilter
+    });
+    window.location.href = `/sarthak-ai?${params.toString()}`;
   });
-
-  searchButton.addEventListener("click", applySearch);
 
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -587,11 +491,8 @@
         chip.classList.toggle("active", chip === button);
       });
 
-      applySearch();
     });
   });
-
-  renderSchemes(schemes);
 
 async function logout() {
 

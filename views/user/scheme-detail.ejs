@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= scheme.name %> - NitiYog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<header class="navbar">
+  <div class="brand"><div class="brand-logo">N</div><div><strong>Niti<span>yog</span></strong><small>Saksham Bharat</small></div></div>
+  <nav><a href="/sarthak-ai">Back to Sarthak AI</a></nav>
+</header>
+<main class="scheme-detail-page">
+  <a class="scheme-back" href="/sarthak-ai">← Back to results</a>
+  <section class="scheme-detail-hero">
+    <span class="scheme-tag"><%= scheme.category || "Government scheme" %></span>
+    <h1><%= scheme.name %></h1>
+    <p><%= scheme.shortDescription || scheme.description %></p>
+    <div class="scheme-detail-actions">
+      <a class="button primary" href="<%= scheme.applicationUrl || scheme.sourceUrl %>" target="_blank" rel="noreferrer">Open official application</a>
+      <span><%= scheme.sourceName || "Official government source" %></span>
+    </div>
+    <div class="scheme-detail-meta">
+      <span><strong>Ministry:</strong> <%= scheme.ministry || "Not specified" %></span>
+      <span><strong>Department:</strong> <%= scheme.department || "Not specified" %></span>
+      <span><strong>State/coverage:</strong> <%= scheme.state || "All India" %></span>
+    </div>
+  </section>
+
+  <section class="scheme-detail-grid">
+    <article class="scheme-detail-section">
+      <h2>About this scheme</h2>
+      <p><%= scheme.description %></p>
+      <% if (scheme.aiDefinition) { %><p><strong>In simple terms:</strong> <%= scheme.aiDefinition %></p><% } %>
+    </article>
+    <article class="scheme-detail-section">
+      <h2>Official sources</h2>
+      <p><a href="<%= scheme.sourceUrl || scheme.applicationUrl %>" target="_blank" rel="noreferrer">Government scheme page</a></p>
+      <% if (scheme.pdfSourceUrl) { %><p><a href="<%= scheme.pdfSourceUrl %>" target="_blank" rel="noreferrer">Source PDF</a></p><% } %>
+    </article>
+    <article class="scheme-detail-section">
+      <h2>Search keywords</h2>
+      <div class="scheme-keywords"><% (scheme.extractedKeywords || scheme.aiKeywords || []).forEach((keyword) => { %><span><%= keyword %></span><% }); %></div>
+    </article>
+    <% if (scheme.searchableText) { %>
+    <article class="scheme-detail-section scheme-detail-full-text">
+      <h2>Extracted source information</h2>
+      <p><%= scheme.searchableText %></p>
+    </article>
+    <% } %>
+    <article class="scheme-detail-section">
+      <h2>Eligibility</h2>
+      <% if (scheme.eligibility?.length) { %><ul><% scheme.eligibility.forEach((item) => { %><li><%= item %></li><% }); %></ul><% } else { %><p>Check the official source for current eligibility rules.</p><% } %>
+    </article>
+    <article class="scheme-detail-section">
+      <h2>Benefits</h2>
+      <% if (scheme.benefits?.length) { %><ul><% scheme.benefits.forEach((item) => { %><li><%= item %></li><% }); %></ul><% } else { %><p>Benefits are described on the official source.</p><% } %>
+    </article>
+    <article class="scheme-detail-section">
+      <h2>Application process</h2>
+      <% if (scheme.applicationProcess?.length) { %><ol><% scheme.applicationProcess.forEach((item) => { %><li><%= item %></li><% }); %></ol><% } else { %><p>Use the official application link for current steps.</p><% } %>
+    </article>
+    <article class="scheme-detail-section">
+      <h2>Required documents</h2>
+      <% if (scheme.requiredDocuments?.length) { %><ul><% scheme.requiredDocuments.forEach((item) => { %><li><%= item %></li><% }); %></ul><% } else { %><p>Document requirements may vary. Confirm them on the official source.</p><% } %>
+    </article>
+    <article class="scheme-detail-section">
+      <h2>Status and deadline</h2>
+      <p><strong>Status:</strong> <%= scheme.currentStatus || "See official source" %></p>
+      <p><strong>Deadline:</strong> <%= scheme.deadline || "See official source" %></p>
+    </article>
+  </section>
+</main>
+</body>
+</html>

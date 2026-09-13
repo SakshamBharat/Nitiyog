@@ -216,6 +216,30 @@
 
   </section>
 
+  <section class="admin-scheme-import">
+    <form id="schemePdfForm" class="admin-scheme-form admin-pdf-form" enctype="multipart/form-data">
+      <label class="wide">Select a government scheme PDF
+        <input name="schemePdf" type="file" accept="application/pdf" />
+      </label>
+      <label class="wide">Or fetch PDF from an official government URL
+        <input name="pdfUrl" type="url" placeholder="https://...gov.in/scheme.pdf" />
+      </label>
+      <label>Application link<input name="applicationUrl" type="url" placeholder="https://...gov.in/apply" /></label>
+      <label>Source portal<input name="sourceUrl" type="url" value="https://www.myscheme.gov.in/" required /></label>
+      <label class="publish-toggle"><input name="status" type="checkbox" value="PUBLISHED" checked /> Publish after scan</label>
+      <button class="button primary" type="submit">Scan PDF and store scheme</button>
+      <p id="schemePdfMessage" class="admin-form-message" role="status"></p>
+    </form>
+
+    <form id="officialSyncForm" class="admin-scheme-form">
+      <label>Official portal batch size
+        <input name="limit" type="number" min="1" max="25" value="5" />
+      </label>
+      <button class="button primary" type="submit">Sync official scheme batch</button>
+      <p id="officialSyncMessage" class="admin-form-message" role="status"></p>
+    </form>
+  </section>
+
 </main>
 
 
@@ -233,6 +257,50 @@ async function logout() {
   window.location.href =
     "/admin/login";
 }
+
+document.getElementById("schemePdfForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const message = document.getElementById("schemePdfMessage");
+  const data = new FormData(form);
+  const file = form.elements.schemePdf.files[0];
+  const pdfUrl = form.elements.pdfUrl.value.trim();
+  if (!file && !pdfUrl) {
+    message.textContent = "Select a PDF or provide an official government PDF URL.";
+    return;
+  }
+  data.set("status", form.elements.status.checked ? "PUBLISHED" : "DRAFT");
+  message.textContent = "Sarthak AI is scanning the PDF and saving the scheme...";
+  try {
+    const response = await fetch("/admin/schemes/upload-pdf", { method: "POST", body: data });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Unable to scan PDF.");
+    message.textContent = `Stored ${payload.scheme.name} successfully.`;
+    form.reset();
+  } catch (error) {
+    message.textContent = error.message;
+  }
+});
+
+document.getElementById("officialSyncForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const message = document.getElementById("officialSyncMessage");
+  message.textContent = "Scanning official portal URLs with Sarthak AI...";
+  try {
+    const response = await fetch("/admin/schemes/sync-official", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ limit: Number(form.elements.limit.value) })
+    });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Official sync failed.");
+    message.textContent = `Discovered ${payload.discovered}; imported ${payload.imported}.`;
+  } catch (error) {
+    console.error("Official scheme sync failed:", error);
+    message.textContent = error.message;
+  }
+});
 
 </script>
 

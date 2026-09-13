@@ -8,6 +8,8 @@ A Node.js + Express web application for citizen scheme discovery, government ser
 - OTP email verification
 - Admin login and dashboard
 - Scheme discovery/search landing page
+- Sarthak AI scheme matching from stored published records
+- Admin scheme ingestion from the official myScheme portal with Gemini definitions
 - PostgreSQL database integration with Sequelize
 - Session-based authentication
 - Responsive EJS views and custom CSS styling
@@ -95,6 +97,11 @@ BREVO_API_KEY=your_brevo_api_key
 BREVO_SENDER_NAME=NitiYog - A Saksham Bharat Product
 BREVO_SENDER_EMAIL=your_sender_email
 OTP_EXPIRY_MINUTES=10
+
+# Python Gemini service
+PYTHON_API_URL=http://127.0.0.1:8000
+GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL=gemini-2.5-flash
 ```
 
 ## Installation
@@ -113,6 +120,17 @@ npm install
 ```bash
 node app.js
 ```
+
+In a second terminal, start the FastAPI Gemini service:
+
+```powershell
+cd Python
+.\.venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000
+```
+
+The user search sends its query to Express at `/api/schemes/search`; Express forwards it to FastAPI at `/ai/search-schemes`, and the returned JSON is rendered in the EJS page.
+
+Admins can add a scheme from `Admin dashboard` using its official government source and application links. FastAPI/Gemini creates the searchable definition and keywords before Express stores the record. Only `PUBLISHED` records are sent to Sarthak AI for matching, so recommendations include the stored scheme definition and official link rather than unsupported generated schemes.
 
 ## Default Admin Account
 

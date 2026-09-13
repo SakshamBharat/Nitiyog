@@ -41,8 +41,76 @@ const Scheme = sequelize.define(
       type: DataTypes.STRING(100)
     },
 
+    category: {
+      type: DataTypes.STRING(100),
+      defaultValue: "General"
+    },
+
     applicationUrl: {
       type: DataTypes.TEXT
+    },
+
+    sourceUrl: {
+      type: DataTypes.TEXT
+    },
+
+    pdfSourceUrl: {
+      type: DataTypes.TEXT
+    },
+
+    sourceName: {
+      type: DataTypes.STRING(255),
+      defaultValue: "myScheme.gov.in"
+    },
+
+    eligibility: {
+      type: DataTypes.JSONB,
+      defaultValue: []
+    },
+
+    benefits: {
+      type: DataTypes.JSONB,
+      defaultValue: []
+    },
+
+    requiredDocuments: {
+      type: DataTypes.JSONB,
+      defaultValue: []
+    },
+
+    applicationProcess: {
+      type: DataTypes.JSONB,
+      defaultValue: []
+    },
+
+    deadline: {
+      type: DataTypes.STRING(200)
+    },
+
+    currentStatus: {
+      type: DataTypes.TEXT
+    },
+
+    searchableText: {
+      type: DataTypes.TEXT
+    },
+
+    extractedKeywords: {
+      type: DataTypes.JSONB,
+      defaultValue: []
+    },
+
+    aiDefinition: {
+      type: DataTypes.TEXT
+    },
+
+    aiKeywords: {
+      type: DataTypes.JSONB,
+      defaultValue: []
+    },
+
+    lastSyncedAt: {
+      type: DataTypes.DATE
     },
 
     status: {

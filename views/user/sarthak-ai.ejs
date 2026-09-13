@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sarthak AI - NitiYog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<header class="navbar">
+  <div class="brand">
+    <div class="brand-logo">N</div>
+    <div><strong>Niti<span>yog</span></strong><small>Saksham Bharat</small></div>
+  </div>
+  <nav><a href="/">Back to search</a></nav>
+</header>
+
+<main class="sarthak-page">
+  <section class="sarthak-hero">
+    <span class="eyebrow-dark">Sarthak AI</span>
+    <h1>Finding a meaningful match for you</h1>
+    <p class="sarthak-query"><%= query || "Your scheme search" %></p>
+    <div id="sarthakStatus" class="sarthak-status" aria-live="polite">
+      <span class="sarthak-pulse"></span>
+      Sarthak is currently working through verified government schemes...
+    </div>
+  </section>
+
+  <section class="sarthak-results" aria-live="polite">
+    <div class="scheme-results-header">
+      <h2 id="sarthakHeading">Searching the scheme catalog</h2>
+      <span id="sarthakCount"></span>
+    </div>
+    <div id="sarthakCards" class="scheme-grid"></div>
+  </section>
+</main>
+
+<script>
+  const query = <%- JSON.stringify(query) %>;
+  const category = <%- JSON.stringify(category) %>;
+  const cards = document.getElementById("sarthakCards");
+  const heading = document.getElementById("sarthakHeading");
+  const count = document.getElementById("sarthakCount");
+  const status = document.getElementById("sarthakStatus");
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>'"]/g, (character) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", "\"": "&quot;"
+    }[character]));
+  }
+
+  function render(items) {
+    if (!items.length) {
+      cards.innerHTML = "<div class=\"scheme-empty\"><h3>No verified match found</h3><p>Try describing your need, location, age, work, or education goal.</p></div>";
+      count.textContent = "0 schemes";
+      return;
+    }
+    cards.innerHTML = items.map((scheme) => `
+      <article class="scheme-card">
+        <div class="scheme-tag">${escapeHtml(scheme.tag)}</div>
+        <h3>${scheme.detail_url ? `<a href="${escapeHtml(scheme.detail_url)}" target="_blank" rel="noreferrer">${escapeHtml(scheme.title)}</a>` : escapeHtml(scheme.title)}</h3>
+        <p>${escapeHtml(scheme.description)}</p>
+        <p class="scheme-match"><strong>Why it matches:</strong> ${escapeHtml(scheme.eligibility_reason)}</p>
+        <div class="scheme-meta"><span>${escapeHtml(scheme.category)}</span>${scheme.detail_url ? `<a href="${escapeHtml(scheme.detail_url)}" target="_blank" rel="noreferrer">View scheme</a>` : ""}</div>
+      </article>
+    `).join("");
+    count.textContent = `${items.length} verified scheme${items.length === 1 ? "" : "s"}`;
+  }
+
+  async function search() {
+    try {
+      const response = await fetch("/api/schemes/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: query || "popular government schemes", category })
+      });
+      const responseText = await response.text();
+      let payload;
+      try {
+        payload = responseText ? JSON.parse(responseText) : {};
+      } catch (parseError) {
+        console.error("Sarthak received invalid JSON:", parseError, responseText);
+        throw new Error("Sarthak returned an invalid server response.");
+      }
+      if (!response.ok) throw new Error(payload.error || "Sarthak could not complete the search.");
+      if (!Array.isArray(payload.schemes)) throw new Error("Sarthak returned an invalid scheme list.");
+      status.innerHTML = "<span class=\"sarthak-check\">✓</span> Sarthak found the best available matches from the verified catalog.";
+      heading.textContent = "Best-fit government schemes";
+      render(payload.schemes || []);
+    } catch (error) {
+      console.error("Sarthak scheme search failed:", error);
+      status.innerHTML = `<span class="sarthak-error">!</span> ${escapeHtml(error.message)}`;
+      heading.textContent = "Search could not be completed";
+      cards.innerHTML = `<div class="scheme-empty"><h3>Try again shortly</h3><p>${escapeHtml(error.message)}</p></div>`;
+    }
+  }
+
+  search();
+</script>
+</body>
+</html>
