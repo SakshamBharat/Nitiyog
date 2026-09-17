@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/nitiyog.css">
+</head>
+<body>
+<div class="auth-shell">
+
+  <!-- Brand Panel -->
+  <aside class="auth-panel--brand">
+    <div class="brand-logo">
+      <div class="brand-logo-mark">N</div>
+      <div class="brand-logo-text">Niti<span>yog</span></div>
+    </div>
+
+    <div class="brand-hero">
+      <h1>Find Schemes<br>You're <em>Eligible</em><br>For — Instantly.</h1>
+      <p style="margin-top:20px;">
+        India has 500+ government schemes for SC/ST, minority, and women entrepreneurs.
+        Nitiyog matches you to the right ones in seconds — and helps you apply.
+      </p>
+    </div>
+
+    <div class="brand-stats">
+      <div class="stat-item">
+        <div class="stat-value">500<span>+</span></div>
+        <div class="stat-label">Active Schemes</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">₹2.4<span>L Cr</span></div>
+        <div class="stat-label">Total Funds Available</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">12<span>K+</span></div>
+        <div class="stat-label">Entrepreneurs Matched</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Form Panel -->
+  <main class="auth-panel--form">
+    <div class="auth-form-box">
+
+      <!-- Steps -->
+      <div class="step-row">
+        <div class="step-dot active">1</div>
+        <div class="step-line"></div>
+        <div class="step-dot todo">2</div>
+        <div class="step-line"></div>
+        <div class="step-dot todo">3</div>
+      </div>
+
+      <div class="form-eyebrow">Step 1 of 3 — Account Setup</div>
+      <h2>Create your profile</h2>
+      <p class="form-sub">Tell us about yourself so we can match you to the right schemes.</p>
+
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div style="background:rgba(255,92,92,0.1);border:1px solid rgba(255,92,92,0.3);color:var(--error);border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:0.88rem;">❌ <%= error %></div>
+      <% } %>
+
+      <form action="/register" method="POST" id="registerForm">
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" name="fname" class="form-control" placeholder="Ramesh" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" name="lname" class="form-control" placeholder="Kumar" required>
+          </div>
+        </div>
+
+        <div class="form-group input-prefix">
+          <label class="form-label">Mobile Number</label>
+          <span class="prefix-tag">+91</span>
+          <input type="tel" name="phone" class="form-control" placeholder="98765 43210"
+                 pattern="[0-9]{10}" maxlength="10" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">State</label>
+          <select name="state" class="form-control" required>
+            <option value="" disabled selected>Select your state</option>
+            <option>Uttar Pradesh</option><option>Maharashtra</option>
+            <option>Bihar</option><option>West Bengal</option>
+            <option>Rajasthan</option><option>Madhya Pradesh</option>
+            <option>Tamil Nadu</option><option>Karnataka</option>
+            <option>Gujarat</option><option>Andhra Pradesh</option>
+            <option>Telangana</option><option>Odisha</option>
+            <option>Jharkhand</option><option>Delhi</option><option>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select name="category" class="form-control" required>
+            <option value="" disabled selected>Select your category</option>
+            <option value="SC">Scheduled Caste (SC)</option>
+            <option value="ST">Scheduled Tribe (ST)</option>
+            <option value="OBC">Other Backward Class (OBC)</option>
+            <option value="Minority">Minority (Muslim/Christian/Sikh/Buddhist/Jain/Parsi)</option>
+            <option value="General">General</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Business Type</label>
+          <select name="business" class="form-control" required>
+            <option value="" disabled selected>What kind of business?</option>
+            <option>Retail Trade</option><option>Manufacturing</option>
+            <option>Agriculture / Agro-processing</option>
+            <option>Services</option><option>Handicraft / Artisan</option>
+            <option>Food Processing</option><option>IT / Tech</option>
+            <option>Healthcare</option><option>Not yet started</option>
+          </select>
+        </div>
+
+        <div class="form-group pw-wrapper">
+          <label class="form-label">Create Password</label>
+          <input type="password" id="pw" name="password" class="form-control"
+                 placeholder="At least 8 characters" required minlength="8">
+          <button type="button" class="pw-toggle" onclick="togglePw()">👁</button>
+        </div>
+
+        <div class="checkbox-group">
+          <label class="checkbox-item">
+            <input type="checkbox" required>
+            I agree to the <a href="#" style="color:var(--gold);text-decoration:none;">Terms of Service</a>
+            &amp; <a href="#" style="color:var(--gold);text-decoration:none;">Privacy Policy</a>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          Continue to Verify <span>→</span>
+        </button>
+      </form>
+
+      <div class="divider">or</div>
+
+      <button class="btn btn-ghost" onclick="window.location='/login'">
+        Already have an account? Login
+      </button>
+
+      <div class="auth-switch" style="margin-top:20px; font-size:0.78rem; color:var(--grey-700);">
+        🔒 Your data is encrypted and never sold.
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+function togglePw() {
+  const pw = document.getElementById('pw');
+  pw.type = pw.type === 'password' ? 'text' : 'password';
+}
+</script>
+</body>
+</html>

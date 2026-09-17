@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/nitiyog.css">
+</head>
+<body>
+<div class="app-shell">
+  <!-- Sidebar same as home -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-mark">N</div>
+      <div class="sidebar-logo-text">Niti<span>yog</span></div>
+    </div>
+    <a href="/home" class="nav-item"><span class="nav-icon">🏠</span> Dashboard</a>
+    <a href="/home" class="nav-item"><span class="nav-icon">🔍</span> Find Schemes</a>
+    <a href="/logout" class="nav-item" style="margin-top:auto;color:var(--error);"><span class="nav-icon">🚪</span> Logout</a>
+  </nav>
+
+  <main class="main-content">
+    <div class="topbar">
+      <a href="/home" style="color:var(--gold);text-decoration:none;font-size:0.9rem;">← Back to Dashboard</a>
+      <div class="topbar-avatar"><%= user.fname[0] %><%= user.lname ? user.lname[0] : '' %></div>
+    </div>
+
+    <!-- Scheme Header -->
+    <div class="hero-banner" style="margin-bottom:28px;">
+      <div class="hero-label">📋 Scheme Details</div>
+      <h2><%= scheme.title %></h2>
+      <p style="margin-bottom:8px;"><strong style="color:var(--white);">Ministry:</strong> <%= scheme.ministry %></p>
+      <% if (scheme.department) { %><p style="margin-bottom:16px;font-size:0.85rem;"><%= scheme.department %></p><% } %>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+        <% (scheme.category||[]).forEach(c=>{ %><span class="tag" style="background:rgba(244,166,35,0.12);color:var(--gold);"><%= c %></span><% }) %>
+        <% (scheme.state||[]).slice(0,3).forEach(s=>{ %><span class="tag">📍 <%= s %></span><% }) %>
+      </div>
+
+      <% if (application) { %>
+        <div style="background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);border-radius:10px;padding:12px 16px;display:inline-flex;align-items:center;gap:10px;">
+          <span style="color:var(--emerald);font-size:1.2rem;">✅</span>
+          <div>
+            <div style="color:var(--emerald);font-weight:600;font-size:0.9rem;">You've Applied!</div>
+            <div style="color:var(--grey-500);font-size:0.78rem;">Status: <%= application.status %></div>
+          </div>
+        </div>
+      <% } else { %>
+        <form action="/apply/<%= scheme.id %>" method="POST" style="display:inline;">
+          <button type="submit" class="btn-find">Apply Now →</button>
+        </form>
+      <% } %>
+      <% if (scheme.scheme_url) { %>
+        <a href="<%= scheme.scheme_url %>" target="_blank" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:var(--white);padding:12px 20px;border-radius:var(--radius-sm);font-size:0.88rem;text-decoration:none;margin-left:10px;display:inline-flex;align-items:center;gap:6px;">🌐 Official Portal</a>
+      <% } %>
+    </div>
+
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:24px;">
+      <!-- Main content -->
+      <div>
+        <!-- Benefit -->
+        <div style="background:var(--navy-700);border:1px solid var(--navy-600);border-radius:14px;padding:24px;margin-bottom:20px;">
+          <h3 style="margin-bottom:12px;">💰 Benefit</h3>
+          <div style="font-size:1.1rem;font-weight:600;color:var(--gold);margin-bottom:6px;"><%= scheme.benefit_amount %></div>
+          <div style="font-size:0.85rem;color:var(--grey-500);">Type: <%= scheme.benefit_type %></div>
+          <% if (scheme.deadline) { %><div style="font-size:0.85rem;color:var(--error);margin-top:8px;">⚠ Deadline: <%= new Date(scheme.deadline).toLocaleDateString('en-IN') %></div><% } %>
+        </div>
+
+        <!-- Description -->
+        <div style="background:var(--navy-700);border:1px solid var(--navy-600);border-radius:14px;padding:24px;margin-bottom:20px;">
+          <h3 style="margin-bottom:14px;">📖 About this Scheme</h3>
+          <p style="font-size:0.9rem;line-height:1.7;"><%= scheme.description %></p>
+        </div>
+
+        <!-- Eligibility -->
+        <% if (scheme.eligibility) { %>
+        <div style="background:var(--navy-700);border:1px solid var(--navy-600);border-radius:14px;padding:24px;margin-bottom:20px;">
+          <h3 style="margin-bottom:14px;">✅ Eligibility Criteria</h3>
+          <p style="font-size:0.9rem;line-height:1.7;white-space:pre-line;"><%= scheme.eligibility %></p>
+        </div>
+        <% } %>
+
+        <!-- How to Apply -->
+        <% if (scheme.how_to_apply) { %>
+        <div style="background:var(--navy-700);border:1px solid var(--navy-600);border-radius:14px;padding:24px;margin-bottom:20px;">
+          <h3 style="margin-bottom:14px;">📝 How to Apply</h3>
+          <p style="font-size:0.9rem;line-height:1.9;white-space:pre-line;"><%= scheme.how_to_apply %></p>
+        </div>
+        <% } %>
+      </div>
+
+      <!-- Sidebar info -->
+      <div>
+        <!-- Documents -->
+        <% if (scheme.documents && scheme.documents.length) { %>
+        <div style="background:var(--navy-700);border:1px solid var(--navy-600);border-radius:14px;padding:24px;margin-bottom:20px;">
+          <h3 style="margin-bottom:14px;">📄 Documents Needed</h3>
+          <% scheme.documents.forEach(doc=>{ %>
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:0.85rem;color:var(--grey-300);">
+            <span style="color:var(--gold);">→</span> <%= doc %>
+          </div>
+          <% }) %>
+        </div>
+        <% } %>
+
+        <!-- Quick Info -->
+        <div style="background:var(--navy-700);border:1px solid var(--navy-600);border-radius:14px;padding:24px;">
+          <h3 style="margin-bottom:14px;">ℹ️ Quick Info</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <% if (scheme.min_age || scheme.max_age) { %>
+            <div style="font-size:0.85rem;"><span style="color:var(--grey-500);">Age Limit:</span> <span style="color:var(--white);float:right;"><%= scheme.min_age||'18' %>–<%= scheme.max_age||'No limit' %> yrs</span></div>
+            <% } %>
+            <% if (scheme.max_income) { %>
+            <div style="font-size:0.85rem;"><span style="color:var(--grey-500);">Max Income:</span> <span style="color:var(--white);float:right;">₹<%= parseInt(scheme.max_income).toLocaleString('en-IN') %>/yr</span></div>
+            <% } %>
+            <div style="font-size:0.85rem;"><span style="color:var(--grey-500);">Gender:</span> <span style="color:var(--white);float:right;"><%= (scheme.gender||[]).join(', ')||'All' %></span></div>
+            <div style="font-size:0.85rem;"><span style="color:var(--grey-500);">Source:</span> <span style="color:var(--emerald);float:right;"><%= scheme.source === 'seed' ? '🏛 Official' : (scheme.source === 'myscheme-api' ? '🌐 MyScheme API' : '✏️ Admin') %></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

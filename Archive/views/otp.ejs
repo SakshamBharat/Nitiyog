@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/nitiyog.css">
+</head>
+<body>
+<div class="auth-shell">
+
+  <!-- Brand Panel -->
+  <aside class="auth-panel--brand">
+    <div class="brand-logo">
+      <div class="brand-logo-mark">N</div>
+      <div class="brand-logo-text">Niti<span>yog</span></div>
+    </div>
+
+    <div class="brand-hero">
+      <h1>One Step<br>Away From<br><em>Your Schemes</em></h1>
+      <p style="margin-top:20px;">
+        We sent a 6-digit code to verify your mobile. This keeps your profile secure and ensures
+        you receive scheme notifications directly.
+      </p>
+    </div>
+
+    <div class="brand-stats">
+      <div class="stat-item">
+        <div class="stat-value"><span class="live-dot"></span>Live</div>
+        <div class="stat-label">Scheme database updated daily</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">98<span>%</span></div>
+        <div class="stat-label">Match Accuracy</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Form Panel -->
+  <main class="auth-panel--form">
+    <div class="auth-form-box">
+
+      <!-- Steps -->
+      <div class="step-row">
+        <div class="step-dot done">✓</div>
+        <div class="step-line done"></div>
+        <div class="step-dot active">2</div>
+        <div class="step-line"></div>
+        <div class="step-dot todo">3</div>
+      </div>
+
+      <div class="form-eyebrow">Step 2 of 3 — Verify Mobile</div>
+      <h2>Enter OTP</h2>
+      <p class="form-sub">
+        We sent a 6-digit code to <strong style="color:var(--white);">+91 <%= phone %></strong>.
+        Check your SMS.
+      </p>
+
+      <div class="alert-info">
+        📱 Demo OTP: <strong>1 2 3 4 5 6</strong>
+      </div>
+
+      <form action="/otp" method="POST" id="otpForm">
+        <div class="otp-row">
+          <input type="text" class="otp-input" maxlength="1" inputmode="numeric" id="otp1" autofocus>
+          <input type="text" class="otp-input" maxlength="1" inputmode="numeric" id="otp2">
+          <input type="text" class="otp-input" maxlength="1" inputmode="numeric" id="otp3">
+          <input type="text" class="otp-input" maxlength="1" inputmode="numeric" id="otp4">
+          <input type="text" class="otp-input" maxlength="1" inputmode="numeric" id="otp5">
+          <input type="text" class="otp-input" maxlength="1" inputmode="numeric" id="otp6">
+        </div>
+        <input type="hidden" name="otp" id="otpHidden">
+
+        <!-- Countdown Timer -->
+        <div class="resend-row">
+          Resend OTP in <span id="timer" style="color:var(--gold); font-weight:600;">30s</span>
+          <span id="resendLink" style="display:none;">
+            <a onclick="startTimer()">Resend OTP</a>
+          </span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="margin-top:24px;" id="verifyBtn">
+          Verify &amp; Continue <span>→</span>
+        </button>
+      </form>
+
+      <div style="margin-top:20px;">
+        <button class="btn btn-ghost" onclick="window.location='/register'">
+          ← Change mobile number
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+// OTP input auto-advance
+const inputs = document.querySelectorAll('.otp-input');
+inputs.forEach((inp, i) => {
+  inp.addEventListener('input', e => {
+    const val = e.target.value.replace(/\D/g, '');
+    e.target.value = val;
+    if (val && i < inputs.length - 1) inputs[i+1].focus();
+    inp.classList.toggle('filled', !!val);
+    updateHidden();
+  });
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Backspace' && !inp.value && i > 0) inputs[i-1].focus();
+  });
+  inp.addEventListener('paste', e => {
+    const pasted = (e.clipboardData.getData('text')||'').replace(/\D/g,'').slice(0,6);
+    if (pasted.length === 6) {
+      inputs.forEach((el,idx) => { el.value = pasted[idx]||''; el.classList.toggle('filled',!!el.value); });
+      inputs[5].focus();
+      updateHidden();
+    }
+    e.preventDefault();
+  });
+});
+
+function updateHidden() {
+  document.getElementById('otpHidden').value = [...inputs].map(el=>el.value).join('');
+}
+
+// Timer
+let secs = 30;
+const timerEl = document.getElementById('timer');
+const resendEl = document.getElementById('resendLink');
+function startTimer() {
+  secs = 30; timerEl.style.display='inline'; resendEl.style.display='none';
+  const t = setInterval(()=>{
+    secs--;
+    timerEl.textContent = secs+'s';
+    if(secs<=0){ clearInterval(t); timerEl.style.display='none'; resendEl.style.display='inline'; }
+  },1000);
+}
+startTimer();
+</script>
+</body>
+</html>

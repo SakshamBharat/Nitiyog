@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/nitiyog.css">
+</head>
+<body>
+<div class="auth-shell">
+
+  <!-- Brand Panel -->
+  <aside class="auth-panel--brand">
+    <div class="brand-logo">
+      <div class="brand-logo-mark">N</div>
+      <div class="brand-logo-text">Niti<span>yog</span></div>
+    </div>
+
+    <div class="brand-hero">
+      <h1>Welcome<br><em>Back.</em><br>Your Schemes<br>Are Waiting.</h1>
+      <p style="margin-top:20px;">
+        Log in to see your matched schemes, track applications,
+        and discover new government funding you're eligible for.
+      </p>
+    </div>
+
+    <!-- Recent activity feed -->
+    <div style="z-index:1;">
+      <div style="font-size:0.75rem; color:var(--grey-700); margin-bottom:10px;">Recent matches</div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="background:var(--navy-700); border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px;">
+          <span>🏭</span>
+          <div>
+            <div style="font-size:0.82rem; font-weight:500;">PM Vishwakarma Scheme</div>
+            <div style="font-size:0.73rem; color:var(--gold);">₹3L grant · 96% match</div>
+          </div>
+        </div>
+        <div style="background:var(--navy-700); border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px;">
+          <span>💼</span>
+          <div>
+            <div style="font-size:0.82rem; font-weight:500;">Stand-Up India</div>
+            <div style="font-size:0.73rem; color:var(--emerald);">₹10L–1Cr loan · 89% match</div>
+          </div>
+        </div>
+        <div style="background:var(--navy-700); border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px;">
+          <span>🧵</span>
+          <div>
+            <div style="font-size:0.82rem; font-weight:500;">NSTFDC Micro Finance</div>
+            <div style="font-size:0.73rem; color:var(--gold);">₹1.5L loan · 91% match</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Form Panel -->
+  <main class="auth-panel--form">
+    <div class="auth-form-box">
+      <div class="brand-logo" style="margin-bottom:36px; justify-content:flex-start;">
+        <div class="brand-logo-mark">N</div>
+        <div class="brand-logo-text">Niti<span>yog</span></div>
+      </div>
+
+      <div class="form-eyebrow">Welcome back</div>
+      <h2>Sign in to your account</h2>
+      <p class="form-sub">Use your registered mobile number or email to continue.</p>
+
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div style="background:rgba(255,92,92,0.1);border:1px solid rgba(255,92,92,0.3);color:var(--error);border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:0.88rem;">❌ <%= error %></div>
+      <% } %>
+
+      <!-- Toggle: Mobile / Email -->
+      <div id="loginToggle" style="display:flex; background:var(--navy-700); border-radius:var(--radius-sm); padding:4px; gap:4px; margin-bottom:24px;">
+        <button type="button" id="mobileTab" onclick="switchTab('mobile')"
+          style="flex:1; padding:9px; border:none; border-radius:8px; font-family:'Inter',sans-serif; font-size:0.85rem; font-weight:500; cursor:pointer; background:var(--gold); color:var(--navy-900); transition:all 0.2s;">
+          📱 Mobile
+        </button>
+        <button type="button" id="emailTab" onclick="switchTab('email')"
+          style="flex:1; padding:9px; border:none; border-radius:8px; font-family:'Inter',sans-serif; font-size:0.85rem; font-weight:500; cursor:pointer; background:transparent; color:var(--grey-500); transition:all 0.2s;">
+          ✉️ Email
+        </button>
+      </div>
+
+      <form action="/login" method="POST">
+        <!-- Mobile login -->
+        <div id="mobileFields">
+          <div class="form-group input-prefix">
+            <label class="form-label">Mobile Number</label>
+            <span class="prefix-tag">+91</span>
+            <input type="tel" name="phone" class="form-control" placeholder="98765 43210"
+                   pattern="[0-9]{10}" maxlength="10">
+          </div>
+        </div>
+
+        <!-- Email login -->
+        <div id="emailFields" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" name="email" class="form-control" placeholder="ramesh@example.com">
+          </div>
+        </div>
+
+        <div class="form-group pw-wrapper">
+          <label class="form-label">Password</label>
+          <input type="password" id="loginPw" name="password" class="form-control" placeholder="Enter your password" required>
+          <button type="button" class="pw-toggle" onclick="togglePw()">👁</button>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+          <label class="checkbox-item" style="margin:0;">
+            <input type="checkbox" name="remember">
+            Remember me
+          </label>
+          <a href="#" style="color:var(--gold); text-decoration:none; font-size:0.83rem; font-weight:500;">
+            Forgot password?
+          </a>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Sign In →</button>
+      </form>
+
+      <div class="divider">new to nitiyog?</div>
+
+      <button class="btn btn-ghost" onclick="window.location='/register'">
+        Create free account
+      </button>
+
+      <p style="text-align:center; font-size:0.75rem; color:var(--grey-700); margin-top:24px;">
+        Ministry of Social Justice &amp; Empowerment · SIH26092
+      </p>
+    </div>
+  </main>
+</div>
+
+<script>
+function switchTab(type) {
+  const isMobile = type === 'mobile';
+  document.getElementById('mobileFields').style.display = isMobile ? 'block' : 'none';
+  document.getElementById('emailFields').style.display  = isMobile ? 'none' : 'block';
+  document.getElementById('mobileTab').style.cssText = isMobile
+    ? 'flex:1;padding:9px;border:none;border-radius:8px;font-family:Inter,sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;background:var(--gold);color:var(--navy-900);transition:all 0.2s;'
+    : 'flex:1;padding:9px;border:none;border-radius:8px;font-family:Inter,sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;background:transparent;color:var(--grey-500);transition:all 0.2s;';
+  document.getElementById('emailTab').style.cssText = isMobile
+    ? 'flex:1;padding:9px;border:none;border-radius:8px;font-family:Inter,sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;background:transparent;color:var(--grey-500);transition:all 0.2s;'
+    : 'flex:1;padding:9px;border:none;border-radius:8px;font-family:Inter,sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;background:var(--gold);color:var(--navy-900);transition:all 0.2s;';
+}
+function togglePw() {
+  const pw = document.getElementById('loginPw');
+  pw.type = pw.type === 'password' ? 'text' : 'password';
+}
+</script>
+</body>
+</html>
