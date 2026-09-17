@@ -3,27 +3,27 @@
    AI Scheme Matching for Marginalized Entrepreneurs
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
-/* ── Tokens ─────────────────────────────── */
+/* ── Tokens (Claude-inspired: cream/coral warm palette, applied on dark product-chrome surfaces) ── */
 :root {
-  --navy-900: #060E1E;
-  --navy-800: #0A1628;
-  --navy-700: #0F2040;
-  --navy-600: #1A3A5C;
-  --navy-500: #204870;
-  --gold:     #F4A623;
-  --gold-dim: #C4821A;
-  --emerald:  #2ECC71;
-  --emerald-dim: #25A75E;
-  --white:    #F8F9FA;
-  --grey-300: #BCC5D3;
-  --grey-500: #7A8BA0;
-  --grey-700: #3D4F63;
-  --error:    #FF5C5C;
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --navy-900: #181715;
+  --navy-800: #1f1e1b;
+  --navy-700: #252320;
+  --navy-600: #35322c;
+  --navy-500: #48443c;
+  --gold:     #cc785c;
+  --gold-dim: #a9583e;
+  --emerald:  #5db872;
+  --emerald-dim: #4a9861;
+  --white:    #faf9f5;
+  --grey-300: #d6d2c9;
+  --grey-500: #a09d96;
+  --grey-700: #8e8b82;
+  --error:    #e0685f;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -39,10 +39,10 @@ body {
 }
 
 /* ── Typography ──────────────────────────── */
-h1, h2, h3, .display { font-family: 'Syne', sans-serif; }
-h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; line-height: 1.1; }
-h2 { font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 700; }
-h3 { font-size: 1.1rem; font-weight: 600; }
+h1, h2, h3, .display { font-family: 'Cormorant Garamond', Georgia, serif; letter-spacing: -0.02em; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 600; line-height: 1.1; }
+h2 { font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 600; }
+h3 { font-size: 1.15rem; font-weight: 600; }
 p  { line-height: 1.65; color: var(--grey-300); }
 
 /* ── Auth Layout ─────────────────────────── */
@@ -71,7 +71,7 @@ p  { line-height: 1.65; color: var(--grey-300); }
   position: absolute;
   width: 420px; height: 420px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(244,166,35,0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(204,120,92,0.12) 0%, transparent 70%);
   top: -80px; left: -80px;
 }
 .auth-panel--brand::after {
@@ -79,7 +79,7 @@ p  { line-height: 1.65; color: var(--grey-300); }
   position: absolute;
   width: 300px; height: 300px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(46,204,113,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(93,184,114,0.08) 0%, transparent 70%);
   bottom: 60px; right: -60px;
 }
 .brand-logo {
@@ -93,14 +93,14 @@ p  { line-height: 1.65; color: var(--grey-300); }
   background: var(--gold);
   border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: 1.1rem;
   color: var(--navy-900);
 }
 .brand-logo-text {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: 1.4rem;
   color: var(--white);
 }
@@ -130,9 +130,9 @@ p  { line-height: 1.65; color: var(--grey-300); }
 }
 .stat-item { }
 .stat-value {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 1.8rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--white);
 }
 .stat-value span { color: var(--gold); }
@@ -197,7 +197,7 @@ p  { line-height: 1.65; color: var(--grey-300); }
 }
 .form-control:focus {
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(244,166,35,0.15);
+  box-shadow: 0 0 0 3px rgba(204,120,92,0.15);
 }
 .form-control::placeholder { color: var(--grey-700); }
 .form-control option { background: var(--navy-700); }
@@ -237,9 +237,9 @@ p  { line-height: 1.65; color: var(--grey-300); }
   width: 100%;
 }
 .btn-primary:hover {
-  background: #ffb733;
+  background: #d98a6e;
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(244,166,35,0.3);
+  box-shadow: 0 8px 24px rgba(204,120,92,0.3);
 }
 .btn-primary:active { transform: translateY(0); }
 .btn-ghost {
@@ -315,7 +315,7 @@ p  { line-height: 1.65; color: var(--grey-300); }
   border: 1.5px solid var(--navy-600);
   border-radius: var(--radius-sm);
   text-align: center;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--white);
@@ -325,7 +325,7 @@ p  { line-height: 1.65; color: var(--grey-300); }
 }
 .otp-input:focus {
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(244,166,35,0.15);
+  box-shadow: 0 0 0 3px rgba(204,120,92,0.15);
 }
 .otp-input.filled { border-color: var(--gold); }
 
@@ -369,13 +369,13 @@ p  { line-height: 1.65; color: var(--grey-300); }
   background: var(--gold);
   border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: 0.9rem;
   color: var(--navy-900);
 }
 .sidebar-logo-text {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 700;
   font-size: 1.1rem;
 }
@@ -402,7 +402,7 @@ p  { line-height: 1.65; color: var(--grey-300); }
   transition: all var(--transition);
 }
 .nav-item:hover { background: var(--navy-700); color: var(--white); }
-.nav-item.active { background: rgba(244,166,35,0.12); color: var(--gold); }
+.nav-item.active { background: rgba(204,120,92,0.12); color: var(--gold); }
 .nav-item .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
 .nav-badge {
   margin-left: auto;
@@ -496,7 +496,7 @@ p  { line-height: 1.65; color: var(--grey-300); }
   background: linear-gradient(135deg, var(--gold), var(--gold-dim));
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 700;
   font-size: 0.9rem;
   color: var(--navy-900);
@@ -518,16 +518,16 @@ p  { line-height: 1.65; color: var(--grey-300); }
   position: absolute;
   width: 340px; height: 340px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(244,166,35,0.10) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(204,120,92,0.10) 0%, transparent 70%);
   right: -60px; top: -60px;
 }
 .hero-banner .hero-label {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(244,166,35,0.12);
+  background: rgba(204,120,92,0.12);
   color: var(--gold);
-  border: 1px solid rgba(244,166,35,0.25);
+  border: 1px solid rgba(204,120,92,0.25);
   border-radius: 100px;
   padding: 4px 14px;
   font-size: 0.78rem;
@@ -560,7 +560,7 @@ p  { line-height: 1.65; color: var(--grey-300); }
   transition: all var(--transition);
   position: relative;
 }
-.hero-banner .btn-find:hover { background: #ffb733; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(244,166,35,0.3); }
+.hero-banner .btn-find:hover { background: #d98a6e; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(204,120,92,0.3); }
 
 /* Stats row */
 .stats-row {
@@ -581,9 +581,9 @@ p  { line-height: 1.65; color: var(--grey-300); }
   margin-bottom: 12px;
 }
 .stat-card .sc-value {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 1.8rem;
-  font-weight: 800;
+  font-weight: 700;
   margin-bottom: 4px;
 }
 .stat-card .sc-value.gold { color: var(--gold); }
@@ -651,9 +651,9 @@ p  { line-height: 1.65; color: var(--grey-300); }
   font-weight: 600;
   margin-bottom: 14px;
 }
-.badge-high { background: rgba(46,204,113,0.15); color: var(--emerald); }
-.badge-mid  { background: rgba(244,166,35,0.15); color: var(--gold); }
-.badge-low  { background: rgba(255,92,92,0.12); color: var(--error); }
+.badge-high { background: rgba(93,184,114,0.15); color: var(--emerald); }
+.badge-mid  { background: rgba(204,120,92,0.15); color: var(--gold); }
+.badge-low  { background: rgba(198,69,69,0.12); color: var(--error); }
 .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 
 .scheme-card h3 { font-size: 0.98rem; margin-bottom: 8px; color: var(--white); }
@@ -671,7 +671,7 @@ p  { line-height: 1.65; color: var(--grey-300); }
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--gold);
-  background: rgba(244,166,35,0.1);
+  background: rgba(204,120,92,0.1);
   border: none;
   padding: 6px 14px;
   border-radius: 100px;
@@ -679,7 +679,7 @@ p  { line-height: 1.65; color: var(--grey-300); }
   transition: all var(--transition);
   font-family: 'Inter', sans-serif;
 }
-.scheme-apply-btn:hover { background: rgba(244,166,35,0.2); }
+.scheme-apply-btn:hover { background: rgba(204,120,92,0.2); }
 
 /* Match Score */
 .match-score-bar {
@@ -732,8 +732,8 @@ p  { line-height: 1.65; color: var(--grey-300); }
   background: linear-gradient(135deg, var(--gold), var(--gold-dim));
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
   font-size: 1.4rem;
   color: var(--navy-900);
   flex-shrink: 0;
@@ -747,7 +747,7 @@ p  { line-height: 1.65; color: var(--grey-300); }
   padding: 3px 12px;
   border-radius: 100px;
 }
-.profile-chip.gold { background: rgba(244,166,35,0.12); color: var(--gold); }
+.profile-chip.gold { background: rgba(204,120,92,0.12); color: var(--gold); }
 
 /* Checkbox */
 .checkbox-group { margin-bottom: 20px; }
@@ -781,8 +781,8 @@ p  { line-height: 1.65; color: var(--grey-300); }
 
 /* Alert box */
 .alert-info {
-  background: rgba(46,204,113,0.08);
-  border: 1px solid rgba(46,204,113,0.2);
+  background: rgba(93,184,114,0.08);
+  border: 1px solid rgba(93,184,114,0.2);
   border-radius: var(--radius-sm);
   padding: 14px 16px;
   font-size: 0.85rem;

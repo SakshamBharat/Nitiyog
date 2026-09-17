@@ -15,8 +15,8 @@
     .filter-input { background:var(--navy-700); border:1.5px solid var(--navy-600); border-radius:8px; padding:9px 14px; color:var(--white); font-size:0.88rem; font-family:'Inter',sans-serif; outline:none; }
     .filter-input:focus { border-color:var(--gold); }
     .btn-add { background:var(--gold); color:var(--navy-900); border:none; border-radius:8px; padding:10px 20px; font-size:0.88rem; font-weight:600; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-family:'Inter',sans-serif; }
-    .btn-add:hover { background:#ffb733; }
-    .alert-success { background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.3); color:var(--emerald); border-radius:8px; padding:12px 16px; margin-bottom:20px; font-size:0.88rem; }
+    .btn-add:hover { background:#d98a6e; }
+    .alert-success { background:rgba(93,184,114,0.1); border:1px solid rgba(93,184,114,0.3); color:var(--emerald); border-radius:8px; padding:12px 16px; margin-bottom:20px; font-size:0.88rem; }
     .schemes-table { width:100%; background:var(--navy-700); border:1px solid var(--navy-600); border-radius:14px; overflow:hidden; }
     .table-head { display:grid; grid-template-columns:3fr 2fr 1.5fr 1fr 1fr 1.5fr; padding:12px 20px; border-bottom:1px solid var(--navy-600); font-size:0.73rem; color:var(--grey-700); font-weight:600; text-transform:uppercase; letter-spacing:0.06em; }
     .table-row { display:grid; grid-template-columns:3fr 2fr 1.5fr 1fr 1fr 1.5fr; padding:14px 20px; border-bottom:1px solid rgba(255,255,255,0.04); align-items:center; transition:background 0.15s; }
@@ -24,13 +24,13 @@
     .table-row:last-child { border-bottom:none; }
     .scheme-title { font-size:0.88rem; font-weight:500; color:var(--white); }
     .scheme-min { font-size:0.78rem; color:var(--grey-500); margin-top:2px; }
-    .cat-chip { background:rgba(244,166,35,0.1); color:var(--gold); font-size:0.7rem; padding:2px 8px; border-radius:100px; display:inline-block; }
+    .cat-chip { background:rgba(204,120,92,0.1); color:var(--gold); font-size:0.7rem; padding:2px 8px; border-radius:100px; display:inline-block; }
     .status-on  { color:var(--emerald); font-size:0.78rem; font-weight:600; }
     .status-off { color:var(--error);   font-size:0.78rem; font-weight:600; }
     .action-btns { display:flex; gap:6px; }
-    .btn-edit { background:rgba(244,166,35,0.1); color:var(--gold); border:none; border-radius:6px; padding:5px 12px; font-size:0.75rem; font-weight:600; cursor:pointer; text-decoration:none; font-family:'Inter',sans-serif; }
-    .btn-toggle { background:rgba(46,204,113,0.1); color:var(--emerald); border:none; border-radius:6px; padding:5px 12px; font-size:0.75rem; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; }
-    .btn-del { background:rgba(255,92,92,0.1); color:var(--error); border:none; border-radius:6px; padding:5px 10px; font-size:0.75rem; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; }
+    .btn-edit { background:rgba(204,120,92,0.1); color:var(--gold); border:none; border-radius:6px; padding:5px 12px; font-size:0.75rem; font-weight:600; cursor:pointer; text-decoration:none; font-family:'Inter',sans-serif; }
+    .btn-toggle { background:rgba(93,184,114,0.1); color:var(--emerald); border:none; border-radius:6px; padding:5px 12px; font-size:0.75rem; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; }
+    .btn-del { background:rgba(198,69,69,0.1); color:var(--error); border:none; border-radius:6px; padding:5px 10px; font-size:0.75rem; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; }
     .pagination { display:flex; justify-content:center; gap:8px; margin-top:24px; }
     .pg-btn { background:var(--navy-700); border:1px solid var(--navy-600); color:var(--grey-300); padding:7px 14px; border-radius:8px; text-decoration:none; font-size:0.85rem; }
     .pg-btn.active { background:var(--gold); color:var(--navy-900); border-color:var(--gold); font-weight:600; }
@@ -41,8 +41,8 @@
 <div class="admin-shell">
   <nav class="admin-sidebar">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;">
-      <div style="width:34px;height:34px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.9rem;color:var(--navy-900);">N</div>
-      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;">Niti<span style="color:var(--gold);">yog</span> <span style="font-size:0.65rem;color:var(--grey-700);">ADMIN</span></div>
+      <div style="width:34px;height:34px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;color:var(--navy-900);">N</div>
+      <div style="font-family:'Cormorant Garamond', Georgia, serif;font-weight:700;font-size:1rem;">Niti<span style="color:var(--gold);">yog</span> <span style="font-size:0.65rem;color:var(--grey-700);">ADMIN</span></div>
     </div>
     <span style="font-size:0.7rem;color:var(--grey-700);letter-spacing:0.1em;text-transform:uppercase;padding:12px 10px 6px;font-weight:600;">Panel</span>
     <a href="/admin" class="nav-item"><span class="nav-icon">📊</span> Dashboard</a>
@@ -64,7 +64,7 @@
     </div>
 
     <% if (success) { %><div class="alert-success">✅ <%= success %></div><% } %>
-    <% if (error) { %><div style="background:rgba(255,92,92,0.1);border:1px solid rgba(255,92,92,0.3);color:var(--error);border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:0.88rem;">❌ <%= error %></div><% } %>
+    <% if (error) { %><div style="background:rgba(198,69,69,0.1);border:1px solid rgba(198,69,69,0.3);color:var(--error);border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:0.88rem;">❌ <%= error %></div><% } %>
 
     <!-- Filter bar -->
     <form method="GET" action="/admin/schemes">
